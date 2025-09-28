@@ -16,7 +16,7 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <nav className="flex items-center justify-between">
           <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            Portfolio
+            TechSolutions
           </div>
           
           {/* Desktop Navigation */}
@@ -32,6 +32,18 @@ const Header = () => {
               className="text-muted-foreground hover:text-primary transition-colors"
             >
               Services
+            </button>
+            <button 
+              onClick={() => scrollToSection('portfolio')}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              Portfolio
+            </button>
+            <button 
+              onClick={() => scrollToSection('testimonials')}
+              className="text-muted-foreground hover:text-primary transition-colors"
+            >
+              Testimonials
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
@@ -70,6 +82,18 @@ const Header = () => {
               className="block w-full text-left py-2 text-muted-foreground hover:text-primary transition-colors"
             >
               Services
+            </button>
+            <button 
+              onClick={() => scrollToSection('portfolio')}
+              className="block w-full text-left py-2 text-muted-foreground hover:text-primary transition-colors"
+            >
+              Portfolio
+            </button>
+            <button 
+              onClick={() => scrollToSection('testimonials')}
+              className="block w-full text-left py-2 text-muted-foreground hover:text-primary transition-colors"
+            >
+              Testimonials
             </button>
             <button 
               onClick={() => scrollToSection('contact')}
