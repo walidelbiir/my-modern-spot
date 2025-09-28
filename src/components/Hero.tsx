@@ -15,15 +15,15 @@ const Hero = () => {
           <div className="space-y-8">
             <div className="space-y-4">
               <h1 className="text-5xl lg:text-6xl font-bold leading-tight">
-                Creative
+                Next-Generation
                 <span className="block bg-gradient-primary bg-clip-text text-transparent">
-                  Freelancer
+                  IT Solutions
                 </span>
-                <span className="block">& Developer</span>
+                <span className="block">for Modern Business</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                I craft exceptional digital experiences through innovative design and clean code. 
-                Let's bring your vision to life with modern, user-centric solutions.
+                We deliver cutting-edge technology solutions that transform your business. 
+                From design to deployment, AI integration to DevOps excellence.
               </p>
             </div>
             
@@ -34,27 +34,27 @@ const Hero = () => {
                 onClick={() => scrollToSection('contact')}
                 className="group"
               >
-                Start Your Project
+                Get Started Today
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
               <Button variant="ghost" size="lg" className="group">
                 <Download className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                Download CV
+                Our Portfolio
               </Button>
             </div>
 
             <div className="flex items-center space-x-8 pt-4">
               <div className="text-center">
+                <div className="text-3xl font-bold text-primary">200+</div>
+                <div className="text-sm text-muted-foreground">Projects Delivered</div>
+              </div>
+              <div className="text-center">
                 <div className="text-3xl font-bold text-primary">50+</div>
-                <div className="text-sm text-muted-foreground">Projects Completed</div>
+                <div className="text-sm text-muted-foreground">Enterprise Clients</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-primary">3+</div>
-                <div className="text-sm text-muted-foreground">Years Experience</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-primary">100%</div>
-                <div className="text-sm text-muted-foreground">Client Satisfaction</div>
+                <div className="text-3xl font-bold text-primary">99.9%</div>
+                <div className="text-sm text-muted-foreground">Uptime Guarantee</div>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@ const Hero = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-glow">
               <img
                 src={heroImage}
-                alt="Professional workspace"
+                alt="Modern IT infrastructure and development team workspace"
                 className="w-full h-auto object-cover"
               />
               <div className="absolute inset-0 bg-gradient-primary/10"></div>

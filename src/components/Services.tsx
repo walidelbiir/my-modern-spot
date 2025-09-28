@@ -6,31 +6,24 @@ const Services = () => {
   const services = [
     {
       icon: Globe,
-      title: "Web Development",
-      description: "Custom websites and web applications built with modern frameworks like React, Next.js, and TypeScript.",
-      features: ["Responsive Design", "SEO Optimized", "Fast Loading", "Cross-browser Compatible"],
-      price: "Starting at $2,500"
-    },
-    {
-      icon: Smartphone,
-      title: "Mobile-First Design",
-      description: "Creating seamless experiences across all devices with mobile-first responsive design principles.",
-      features: ["Progressive Web Apps", "Touch Optimization", "Offline Functionality", "App-like Experience"],
-      price: "Starting at $1,800"
+      title: "Design & Development",
+      description: "Full-stack application development with modern frameworks, responsive design, and seamless user experiences.",
+      features: ["Custom Web Applications", "Mobile-Responsive Design", "API Development", "Database Architecture"],
+      price: "Starting at $5,000"
     },
     {
       icon: Database,
-      title: "Backend Solutions",
-      description: "Robust server-side applications with secure APIs, database design, and cloud deployment.",
-      features: ["RESTful APIs", "Database Design", "Cloud Hosting", "Security Best Practices"],
-      price: "Starting at $3,000"
+      title: "DevOps Projects",
+      description: "Complete DevOps solutions including CI/CD pipelines, infrastructure automation, and cloud deployment strategies.",
+      features: ["CI/CD Pipelines", "Infrastructure as Code", "Container Orchestration", "Cloud Migration"],
+      price: "Starting at $3,500"
     },
     {
       icon: Lightbulb,
-      title: "Consulting & Strategy",
-      description: "Technical consulting to help you make the right technology decisions for your project.",
-      features: ["Tech Stack Planning", "Architecture Review", "Performance Audit", "Code Review"],
-      price: "Starting at $150/hour"
+      title: "AI Agents Integration",
+      description: "Intelligent automation solutions with AI agents, machine learning integration, and custom AI-powered features.",
+      features: ["Custom AI Agents", "Process Automation", "ML Model Integration", "Intelligent Workflows"],
+      price: "Starting at $4,000"
     }
   ];
 
@@ -44,14 +37,14 @@ const Services = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            My <span className="bg-gradient-primary bg-clip-text text-transparent">Services</span>
+            Our <span className="bg-gradient-primary bg-clip-text text-transparent">Services</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive solutions to bring your digital vision to life
+            Comprehensive IT solutions that drive digital transformation and business growth
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon;
             return (

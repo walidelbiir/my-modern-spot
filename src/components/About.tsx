@@ -4,8 +4,8 @@ import { Code, Palette, Zap } from "lucide-react";
 
 const About = () => {
   const skills = [
-    "React", "TypeScript", "Node.js", "Python", "UI/UX Design", 
-    "Figma", "Adobe Creative Suite", "MongoDB", "PostgreSQL"
+    "React", "TypeScript", "Node.js", "Python", "Docker", 
+    "Kubernetes", "AWS", "Azure", "CI/CD", "Terraform", "AI/ML", "OpenAI"
   ];
 
   return (
@@ -13,24 +13,24 @@ const About = () => {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            About <span className="bg-gradient-primary bg-clip-text text-transparent">Me</span>
+            About <span className="bg-gradient-primary bg-clip-text text-transparent">Our Company</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Passionate about creating digital experiences that make a difference
+            Leading IT solutions provider transforming businesses through innovative technology
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center mb-16">
           <div className="space-y-6">
             <p className="text-lg leading-relaxed text-muted-foreground">
-              With over 3 years of experience in web development and design, I specialize in 
-              creating modern, responsive applications that deliver exceptional user experiences. 
-              My approach combines technical expertise with creative problem-solving.
+              We are a forward-thinking IT services company specializing in comprehensive digital 
+              transformation. Our team of expert developers, DevOps engineers, and AI specialists 
+              work together to deliver cutting-edge solutions that drive business growth.
             </p>
             <p className="text-lg leading-relaxed text-muted-foreground">
-              I believe in clean code, intuitive design, and continuous learning. Whether it's 
-              building a startup's first product or scaling an enterprise solution, I'm committed 
-              to delivering quality results that exceed expectations.
+              From custom application development to intelligent automation, we combine technical 
+              excellence with strategic thinking to help organizations stay ahead in the digital age. 
+              Our commitment to quality and innovation has made us the trusted partner for businesses worldwide.
             </p>
           </div>
           
@@ -41,8 +41,8 @@ const About = () => {
                   <Code className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Full-Stack Development</h3>
-                  <p className="text-muted-foreground">Modern web applications from concept to deployment</p>
+                  <h3 className="font-semibold text-lg">Design & Development</h3>
+                  <p className="text-muted-foreground">End-to-end application development with modern frameworks</p>
                 </div>
               </div>
             </Card>
@@ -53,8 +53,8 @@ const About = () => {
                   <Palette className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">UI/UX Design</h3>
-                  <p className="text-muted-foreground">Beautiful, user-centered designs that convert</p>
+                  <h3 className="font-semibold text-lg">DevOps Excellence</h3>
+                  <p className="text-muted-foreground">Streamlined deployment and infrastructure automation</p>
                 </div>
               </div>
             </Card>
@@ -65,8 +65,8 @@ const About = () => {
                   <Zap className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-lg">Performance Optimization</h3>
-                  <p className="text-muted-foreground">Fast, scalable solutions that grow with your business</p>
+                  <h3 className="font-semibold text-lg">AI Integration</h3>
+                  <p className="text-muted-foreground">Intelligent automation and AI-powered solutions</p>
                 </div>
               </div>
             </Card>
