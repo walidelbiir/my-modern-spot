@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Calendar } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -161,6 +161,28 @@ const Contact = () => {
                 <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
             </form>
+
+            {/* Calendar Booking Section */}
+            <div className="mt-8 pt-8 border-t border-border">
+              <div className="text-center">
+                <p className="text-muted-foreground mb-4">Or better yet, book a call</p>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full group"
+                  asChild
+                >
+                  <a
+                    href="https://calendar.google.com/calendar/appointments/schedules/YOUR_SCHEDULE_ID"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Calendar className="mr-2 h-5 w-5" />
+                    Book a Meeting
+                  </a>
+                </Button>
+              </div>
+            </div>
           </Card>
         </div>
       </div>
