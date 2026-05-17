@@ -9,11 +9,12 @@ const Footer = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div className="space-y-4">
-            <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-              Portfolio
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-2xl font-bold tracking-tight text-primary">BIR</span>
+              <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">Solutions</span>
             </div>
             <p className="text-muted-foreground leading-relaxed">
-              Creating exceptional digital experiences through innovative design and clean code.
+              IT Services &amp; AI Automation. Engineering reliable digital infrastructure for modern businesses.
             </p>
           </div>
 
@@ -74,12 +75,12 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-muted-foreground text-sm">
-            © {currentYear} Portfolio. All rights reserved.
+            © {currentYear} BIR Solutions. All rights reserved.
           </div>
           <div className="flex items-center space-x-1 text-muted-foreground text-sm">
-            <span>Made with</span>
-            <Heart className="h-4 w-4 text-red-500 fill-current" />
-            <span>using React & Tailwind CSS</span>
+            <span>Crafted with</span>
+            <Heart className="h-4 w-4 text-primary fill-current" />
+            <span>by the BIR team</span>
           </div>
         </div>
       </div>
