@@ -15,8 +15,9 @@ const Header = () => {
     <header className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b z-50">
       <div className="container mx-auto px-6 py-4">
         <nav className="flex items-center justify-between">
-          <div className="text-2xl font-bold bg-gradient-primary bg-clip-text text-transparent">
-            TechSolutions
+          <div className="flex items-baseline gap-1.5">
+            <span className="text-2xl font-bold tracking-tight text-primary">BIR</span>
+            <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">Solutions</span>
           </div>
           
           {/* Desktop Navigation */}
