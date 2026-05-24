@@ -1,46 +1,45 @@
+const clients = [
+  "ACME CORP",
+  "NORTHWIND",
+  "STELLAR.IO",
+  "QUANTUMLABS",
+  "HELIX",
+  "BYTEFORGE",
+  "NIMBUS CLOUD",
+  "ORBITAL",
+  "VERTEX AI",
+  "PARALLAX",
+];
+
 const ClientLogos = () => {
-  const clients = [
-    { name: "Microsoft", logo: "/placeholder.svg" },
-    { name: "Google", logo: "/placeholder.svg" },
-    { name: "Amazon", logo: "/placeholder.svg" },
-    { name: "Spotify", logo: "/placeholder.svg" },
-    { name: "Netflix", logo: "/placeholder.svg" },
-    { name: "Adobe", logo: "/placeholder.svg" },
-    { name: "Tesla", logo: "/placeholder.svg" },
-    { name: "Salesforce", logo: "/placeholder.svg" }
-  ];
+  const doubled = [...clients, ...clients];
 
   return (
-    <section className="py-16 bg-gradient-subtle overflow-hidden">
+    <section className="py-16 bg-background border-y border-border overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">
-            Trusted by <span className="bg-gradient-primary bg-clip-text text-transparent">Industry Leaders</span>
-          </h2>
-          <p className="text-muted-foreground">
-            We've partnered with innovative companies worldwide
-          </p>
+        <div className="text-center mb-10">
+          <div className="text-xs tracking-[0.25em] uppercase text-muted-foreground">
+            Trusted by teams at
+          </div>
+        </div>
+      </div>
+
+      <div className="relative">
+        <div className="flex w-max gap-16 animate-scroll">
+          {doubled.map((name, i) => (
+            <div
+              key={`${name}-${i}`}
+              className="flex-shrink-0 flex items-center justify-center px-4"
+            >
+              <span className="text-xl md:text-2xl font-bold tracking-[0.15em] text-muted-foreground/60 hover:text-primary transition-colors whitespace-nowrap">
+                {name}
+              </span>
+            </div>
+          ))}
         </div>
 
-        <div className="relative">
-          <div className="flex space-x-8 animate-[scroll_30s_linear_infinite]">
-            {[...clients, ...clients].map((client, index) => (
-              <div
-                key={`${client.name}-${index}`}
-                className="flex-shrink-0 w-32 h-16 flex items-center justify-center bg-background/50 rounded-lg hover:bg-background/80 transition-colors group"
-              >
-                <img
-                  src={client.logo}
-                  alt={`${client.name} logo`}
-                  className="max-w-24 max-h-10 object-contain opacity-60 group-hover:opacity-100 transition-opacity filter grayscale group-hover:grayscale-0"
-                />
-              </div>
-            ))}
-          </div>
-          
-          <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-background via-background/80 to-transparent z-10"></div>
-          <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-background via-background/80 to-transparent z-10"></div>
-        </div>
+        <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-background to-transparent z-10" />
+        <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-background to-transparent z-10" />
       </div>
     </section>
   );

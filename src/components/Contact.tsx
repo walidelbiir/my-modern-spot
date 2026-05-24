@@ -2,67 +2,99 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Send, Calendar } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Mail, Phone, MapPin, Send, Calendar, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+const schema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100),
+  email: z.string().trim().email("Enter a valid email").max(255),
+  service: z.string().min(1, "Please select a service"),
+  message: z.string().trim().min(10, "Tell us a bit more (10+ chars)").max(1000),
+});
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    service: "",
+    message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const result = schema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.issues.forEach((i) => {
+        if (i.path[0]) fieldErrors[i.path[0] as string] = i.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+    setErrors({});
+    setSubmitted(true);
     toast({
       title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
+      description: "Thanks — we'll get back to you within one business day.",
     });
-    setFormData({ name: '', email: '', message: '' });
+    setFormData({ name: "", email: "", service: "", message: "" });
+    setTimeout(() => setSubmitted(false), 4000);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <section id="contact" className="py-20 bg-background">
+    <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4">
-            Get In <span className="bg-gradient-primary bg-clip-text text-transparent">Touch</span>
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
+            Get in touch
+          </div>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+            Let's build{" "}
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
+              something great together.
+            </span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Ready to start your project? Let's discuss how I can help bring your vision to life.
+          <p className="text-lg text-muted-foreground">
+            Tell us about your project and we'll respond within one business day.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
           <div className="space-y-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-6">Let's Connect</h3>
-              <p className="text-muted-foreground mb-8 leading-relaxed">
-                I'm always excited to work on new projects and collaborate with amazing people. 
-                Drop me a message and let's create something incredible together.
-              </p>
-            </div>
-
             <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-lg bg-gradient-primary">
+              <a
+                href="mailto:hello@bir.tech"
+                className="flex items-center space-x-4 group"
+              >
+                <div className="p-3 rounded-lg bg-gradient-primary group-hover:shadow-glow transition-shadow">
                   <Mail className="h-5 w-5 text-primary-foreground" />
                 </div>
                 <div>
                   <div className="font-medium">Email</div>
-                  <div className="text-muted-foreground">hello@bir.tech</div>
+                  <div className="text-muted-foreground group-hover:text-primary transition-colors">
+                    hello@bir.tech
+                  </div>
                 </div>
-              </div>
+              </a>
 
               <div className="flex items-center space-x-4">
                 <div className="p-3 rounded-lg bg-gradient-primary">
@@ -85,16 +117,41 @@ const Contact = () => {
               </div>
             </div>
 
-            <Card className="p-6 bg-gradient-subtle">
+            {/* Prominent booking card */}
+            <Card className="p-6 bg-gradient-primary text-primary-foreground border-primary shadow-elegant">
+              <div className="flex items-start gap-4">
+                <div className="p-3 rounded-lg bg-primary-foreground/10">
+                  <Calendar className="h-6 w-6" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-semibold text-lg mb-1">Or skip the form</h4>
+                  <p className="text-primary-foreground/80 text-sm mb-4">
+                    Book a 30-minute intro call directly on our calendar.
+                  </p>
+                  <Button
+                    asChild
+                    className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 w-full sm:w-auto"
+                  >
+                    <a
+                      href="https://calendar.google.com/calendar/appointments/schedules/YOUR_SCHEDULE_ID"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <Calendar className="h-4 w-4" />
+                      Book a Meeting
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-6 bg-gradient-subtle border-border">
               <h4 className="font-semibold text-lg mb-3">Project Timeline</h4>
-              <p className="text-muted-foreground mb-4">
-                Most projects are completed within 2-6 weeks, depending on complexity and scope.
-              </p>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Initial consultation: 1-2 days</li>
-                <li>• Proposal & planning: 3-5 days</li>
-                <li>• Development: 1-4 weeks</li>
-                <li>• Testing & launch: 3-7 days</li>
+                <li>• Initial consultation: 1–2 days</li>
+                <li>• Proposal &amp; planning: 3–5 days</li>
+                <li>• Development: 1–4 weeks</li>
+                <li>• Testing &amp; launch: 3–7 days</li>
               </ul>
             </Card>
           </div>
@@ -102,7 +159,7 @@ const Contact = () => {
           {/* Contact Form */}
           <Card className="p-8">
             <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
                   Full Name
@@ -110,13 +167,14 @@ const Contact = () => {
                 <Input
                   id="name"
                   name="name"
-                  type="text"
-                  required
                   value={formData.name}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   placeholder="John Doe"
-                  className="w-full"
+                  maxLength={100}
                 />
+                {errors.name && (
+                  <p className="text-destructive text-xs mt-1">{errors.name}</p>
+                )}
               </div>
 
               <div>
@@ -127,12 +185,39 @@ const Contact = () => {
                   id="email"
                   name="email"
                   type="email"
-                  required
                   value={formData.email}
-                  onChange={handleInputChange}
+                  onChange={handleChange}
                   placeholder="john@example.com"
-                  className="w-full"
+                  maxLength={255}
                 />
+                {errors.email && (
+                  <p className="text-destructive text-xs mt-1">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="service" className="block text-sm font-medium mb-2">
+                  Service of Interest
+                </label>
+                <Select
+                  value={formData.service}
+                  onValueChange={(v) => setFormData({ ...formData, service: v })}
+                >
+                  <SelectTrigger id="service">
+                    <SelectValue placeholder="Select a service" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="design-development">
+                      Design &amp; Development
+                    </SelectItem>
+                    <SelectItem value="devops">DevOps Projects</SelectItem>
+                    <SelectItem value="ai-agents">AI Agents Integration</SelectItem>
+                    <SelectItem value="other">Something else</SelectItem>
+                  </SelectContent>
+                </Select>
+                {errors.service && (
+                  <p className="text-destructive text-xs mt-1">{errors.service}</p>
+                )}
               </div>
 
               <div>
@@ -142,47 +227,32 @@ const Contact = () => {
                 <Textarea
                   id="message"
                   name="message"
-                  required
                   value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder="Tell me about your project, timeline, and budget..."
-                  rows={6}
-                  className="w-full resize-none"
+                  onChange={handleChange}
+                  placeholder="Tell us about your project, timeline, and budget..."
+                  rows={5}
+                  maxLength={1000}
+                  className="resize-none"
                 />
+                {errors.message && (
+                  <p className="text-destructive text-xs mt-1">{errors.message}</p>
+                )}
               </div>
 
-              <Button 
-                type="submit" 
-                variant="hero" 
-                size="lg" 
-                className="w-full group"
-              >
-                Send Message
-                <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              <Button type="submit" variant="hero" size="lg" className="w-full group">
+                {submitted ? (
+                  <>
+                    <CheckCircle2 className="h-4 w-4" />
+                    Message Sent
+                  </>
+                ) : (
+                  <>
+                    Send Message
+                    <Send className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </>
+                )}
               </Button>
             </form>
-
-            {/* Calendar Booking Section */}
-            <div className="mt-8 pt-8 border-t border-border">
-              <div className="text-center">
-                <p className="text-muted-foreground mb-4">Or better yet, book a call</p>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full group"
-                  asChild
-                >
-                  <a
-                    href="https://calendar.google.com/calendar/appointments/schedules/YOUR_SCHEDULE_ID"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Calendar className="mr-2 h-5 w-5" />
-                    Book a Meeting
-                  </a>
-                </Button>
-              </div>
-            </div>
           </Card>
         </div>
       </div>

@@ -1,86 +1,92 @@
-import { Github, Linkedin, Twitter, Heart } from "lucide-react";
+import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const links = [
+    { id: "about", label: "About" },
+    { id: "services", label: "Services" },
+    { id: "process", label: "Process" },
+    { id: "portfolio", label: "Portfolio" },
+    { id: "testimonials", label: "Testimonials" },
+    { id: "contact", label: "Contact" },
+  ];
+
+  const go = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <footer className="bg-gradient-subtle border-t">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <div className="flex items-baseline gap-1.5">
+      <div className="container mx-auto px-6 py-14">
+        <div className="grid md:grid-cols-12 gap-8 mb-10">
+          <div className="md:col-span-5 space-y-4">
+            <div className="flex items-baseline gap-2">
               <span className="text-2xl font-bold tracking-tight text-primary">BIR</span>
-              <span className="text-sm font-medium tracking-[0.2em] uppercase text-muted-foreground">Solutions</span>
+              <span className="text-[0.7rem] font-semibold tracking-[0.18em] uppercase text-muted-foreground">
+                Solutions
+              </span>
             </div>
-            <p className="text-muted-foreground leading-relaxed">
-              IT Services &amp; AI Automation. Engineering reliable digital infrastructure for modern businesses.
+            <p className="text-muted-foreground leading-relaxed max-w-md">
+              IT services, DevOps, and AI agent integration. Engineering reliable digital
+              infrastructure for modern businesses.
             </p>
+            <a
+              href="mailto:hello@bir.tech"
+              className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+            >
+              <Mail className="h-4 w-4" />
+              hello@bir.tech
+            </a>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Quick Links</h3>
-            <div className="flex flex-col space-y-2">
-              <button 
-                onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-muted-foreground hover:text-primary transition-colors text-left"
-              >
-                About
-              </button>
-              <button 
-                onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-muted-foreground hover:text-primary transition-colors text-left"
-              >
-                Services
-              </button>
-              <button 
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                className="text-muted-foreground hover:text-primary transition-colors text-left"
-              >
-                Contact
-              </button>
+          <div className="md:col-span-4 space-y-4">
+            <h3 className="font-semibold text-sm tracking-[0.15em] uppercase text-muted-foreground">
+              Navigate
+            </h3>
+            <div className="grid grid-cols-2 gap-2">
+              {links.map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => go(l.id)}
+                  className="text-muted-foreground hover:text-primary transition-colors text-left text-sm"
+                >
+                  {l.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Connect</h3>
-            <div className="flex space-x-4">
-              <a 
-                href="#" 
-                className="p-2 rounded-lg bg-background hover:bg-gradient-primary hover:text-primary-foreground transition-all duration-300 hover:shadow-glow"
-                aria-label="GitHub"
-              >
-                <Github className="h-5 w-5" />
-              </a>
-              <a 
-                href="#" 
-                className="p-2 rounded-lg bg-background hover:bg-gradient-primary hover:text-primary-foreground transition-all duration-300 hover:shadow-glow"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a 
-                href="#" 
-                className="p-2 rounded-lg bg-background hover:bg-gradient-primary hover:text-primary-foreground transition-all duration-300 hover:shadow-glow"
-                aria-label="Twitter"
-              >
-                <Twitter className="h-5 w-5" />
-              </a>
+          <div className="md:col-span-3 space-y-4">
+            <h3 className="font-semibold text-sm tracking-[0.15em] uppercase text-muted-foreground">
+              Connect
+            </h3>
+            <div className="flex space-x-3">
+              {[
+                { Icon: Github, label: "GitHub" },
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Twitter, label: "Twitter" },
+              ].map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="p-2 rounded-lg bg-background border border-border hover:bg-gradient-primary hover:text-primary-foreground hover:border-transparent transition-all duration-300"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-          <div className="text-muted-foreground text-sm">
-            © {currentYear} BIR Solutions. All rights reserved.
-          </div>
-          <div className="flex items-center space-x-1 text-muted-foreground text-sm">
-            <span>Crafted with</span>
-            <Heart className="h-4 w-4 text-primary fill-current" />
-            <span>by the BIR team</span>
+        <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground">
+          <div>© {currentYear} BIR Solutions. All rights reserved.</div>
+          <div className="flex gap-6">
+            <a href="#" className="hover:text-primary transition-colors">
+              Privacy Policy
+            </a>
+            <a href="#" className="hover:text-primary transition-colors">
+              Terms of Service
+            </a>
           </div>
         </div>
       </div>
