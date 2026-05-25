@@ -1,0 +1,13 @@
+# BIR Solutions
+
+> BIR Solutions is a senior engineering team delivering design & development, DevOps infrastructure, and AI agent integration for modern businesses. We partner with founders and enterprise teams to design, build, and operate digital platforms that ship fast and scale well.
+
+## Pages
+
+- [Home](/): Overview of services, portfolio, testimonials, and contact.
+- [About](/#about): Company background, team, and technology expertise.
+- [Services](/#services): Design & Development, DevOps, and AI Agents integration.
+- [Process](/#process): How we work — Discovery, Design, Build, and Launch.
+- [Portfolio](/#portfolio): Selected projects and client work.
+- [Testimonials](/#testimonials): Client reviews and success stories.
+- [Contact](/#contact): Send a message or book a meeting with the team.
