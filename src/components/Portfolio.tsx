@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Bookmark } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { portfolioSlugMap } from "@/data/caseStudies";
 
 type Category = "All" | "Design & Development" | "DevOps Projects" | "AI Agents Integration";
 
