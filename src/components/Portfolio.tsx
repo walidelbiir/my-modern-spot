@@ -187,7 +187,8 @@ const Portfolio = () => {
                   </div>
                 </div>
               </Card>
-            ))}
+              );
+            })}
           </div>
         </TooltipProvider>
       </div>
