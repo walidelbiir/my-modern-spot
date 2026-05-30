@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, ArrowRight, Check, Cog, Container, Cloud, Database, Smartphone, Bell, MonitorCog, Timer, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, Cog, Container, Cloud, Database, Smartphone, Bell, ChevronDown } from "lucide-react";
 import { getCaseStudy, type CaseStudySection } from "@/data/caseStudies";
 import { cn } from "@/lib/utils";
 
