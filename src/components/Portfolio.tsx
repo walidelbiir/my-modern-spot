@@ -4,7 +4,9 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink, Bookmark } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { portfolioSlugMap } from "@/data/caseStudies";
 
 type Category = "All" | "Design & Development" | "DevOps Projects" | "AI Agents Integration";
 
@@ -121,27 +123,31 @@ const Portfolio = () => {
 
         <TooltipProvider>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filtered.map((project) => (
+            {filtered.map((project) => {
+              const slug = portfolioSlugMap[project.title] ?? project.title.toLowerCase().replace(/\s+/g, "-");
+              return (
               <Card
                 key={project.title}
                 className="overflow-hidden hover:shadow-elegant hover:-translate-y-2 transition-all duration-300 group"
               >
-                <div
-                  className={cn(
-                    "aspect-video relative overflow-hidden bg-gradient-to-br",
-                    project.gradient
-                  )}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-6xl font-bold text-white/20 group-hover:scale-110 transition-transform duration-500">
-                      {project.initials}
-                    </span>
+                <Link to={`/portfolio/${slug}`} className="block">
+                  <div
+                    className={cn(
+                      "aspect-video relative overflow-hidden bg-gradient-to-br",
+                      project.gradient
+                    )}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-6xl font-bold text-white/20 group-hover:scale-110 transition-transform duration-500">
+                        {project.initials}
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute bottom-3 left-3 right-3 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                      <span className="text-xs text-white/90 font-medium">View case study →</span>
+                    </div>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-3 left-3 right-3 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                    <span className="text-xs text-white/90 font-medium">View case study →</span>
-                  </div>
-                </div>
+                </Link>
 
                 <div className="p-6 space-y-4">
                   <div>
@@ -163,14 +169,17 @@ const Portfolio = () => {
                   </div>
 
                   <div className="flex gap-2 pt-2">
-                    <Button variant="default" size="sm" className="flex-1">
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      Case Study
+                    <Button asChild variant="default" size="sm" className="flex-1">
+                      <Link to={`/portfolio/${slug}`}>
+                        <ExternalLink className="h-3 w-3 mr-1" />
+                        Case Study
+                      </Link>
                     </Button>
                     <Tooltip>
                       <TooltipTrigger asChild>
                         <Button variant="outline" size="sm" aria-label="Save project">
                           <Bookmark className="h-3 w-3" />
+
                         </Button>
                       </TooltipTrigger>
                       <TooltipContent>Save for later</TooltipContent>
@@ -178,7 +187,8 @@ const Portfolio = () => {
                   </div>
                 </div>
               </Card>
-            ))}
+              );
+            })}
           </div>
         </TooltipProvider>
       </div>
