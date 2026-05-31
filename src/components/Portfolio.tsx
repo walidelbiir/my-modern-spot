@@ -149,7 +149,7 @@ const Portfolio = () => {
                   </div>
                 </Link>
 
-                <div className="p-6 space-y-4">
+                <div className="p-6 space-y-4 flex flex-col flex-1">
                   <div>
                     <Badge variant="outline" className="mb-2 text-xs">
                       {project.category}
