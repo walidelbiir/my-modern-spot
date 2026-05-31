@@ -122,7 +122,7 @@ const Portfolio = () => {
         </div>
 
         <TooltipProvider>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {filtered.map((project) => {
               const slug = portfolioSlugMap[project.title] ?? project.title.toLowerCase().replace(/\s+/g, "-");
               return (
