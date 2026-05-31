@@ -3,6 +3,8 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { cn } from "@/lib/utils";
+import { AnimatePresence, motion } from "motion/react";
+import { EASE } from "@/lib/motion";
 
 const NAV_ITEMS = [
   { id: "about", label: "About" },
@@ -31,7 +33,10 @@ const Header = () => {
   };
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -80, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, ease: EASE }}
       className={cn(
         "fixed top-0 w-full z-50 transition-all duration-300",
         scrolled
@@ -90,27 +95,40 @@ const Header = () => {
         </nav>
 
         {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-2 animate-fade-in">
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={cn(
-                  "block w-full text-left py-2 transition-colors",
-                  active === item.id ? "text-primary font-semibold" : "text-muted-foreground"
-                )}
-              >
-                {item.label}
-              </button>
-            ))}
-            <Button variant="hero" className="w-full" onClick={() => scrollToSection("contact")}>
-              Get Started
-            </Button>
-          </div>
-        )}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: EASE }}
+              className="md:hidden overflow-hidden"
+            >
+              <div className="mt-4 pb-4 space-y-2">
+                {NAV_ITEMS.map((item, i) => (
+                  <motion.button
+                    key={item.id}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.25, ease: EASE, delay: i * 0.04 }}
+                    onClick={() => scrollToSection(item.id)}
+                    className={cn(
+                      "block w-full text-left py-2 transition-colors",
+                      active === item.id ? "text-primary font-semibold" : "text-muted-foreground"
+                    )}
+                  >
+                    {item.label}
+                  </motion.button>
+                ))}
+                <Button variant="hero" className="w-full" onClick={() => scrollToSection("contact")}>
+                  Get Started
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 };
 

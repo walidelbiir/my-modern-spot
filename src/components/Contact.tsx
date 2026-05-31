@@ -12,6 +12,9 @@ import {
 import { Mail, Phone, MapPin, Send, Calendar, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useGeneralInformation } from "@/hooks/useSiteData";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Reveal } from "@/components/motion";
 import { z } from "zod";
 
 const schema = z.object({
@@ -22,6 +25,7 @@ const schema = z.object({
 });
 
 const Contact = () => {
+  const { data: info, isLoading } = useGeneralInformation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -62,7 +66,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-24 bg-background">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <Reveal className="text-center mb-16 max-w-2xl mx-auto">
           <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
             Get in touch
           </div>
@@ -75,14 +79,22 @@ const Contact = () => {
           <p className="text-lg text-muted-foreground">
             Tell us about your project and we'll respond within one business day.
           </p>
-        </div>
+        </Reveal>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
-          <div className="space-y-8">
+          <Reveal direction="right" className="space-y-8">
             <div className="space-y-6">
+              {isLoading ? (
+                <>
+                  <Skeleton className="h-16 w-full" />
+                  <Skeleton className="h-16 w-full" />
+                  <Skeleton className="h-16 w-full" />
+                </>
+              ) : (
+                <>
               <a
-                href="mailto:hello@bir.tech"
+                href={`mailto:${info?.email ?? "hello@bir.tech"}`}
                 className="flex items-center space-x-4 group"
               >
                 <div className="p-3 rounded-lg bg-gradient-primary group-hover:shadow-glow transition-shadow">
@@ -91,7 +103,7 @@ const Contact = () => {
                 <div>
                   <div className="font-medium">Email</div>
                   <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                    hello@bir.tech
+                    {info?.email ?? "hello@bir.tech"}
                   </div>
                 </div>
               </a>
@@ -102,7 +114,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-medium">Phone</div>
-                  <div className="text-muted-foreground">01 3245 759 789</div>
+                  <div className="text-muted-foreground">{info?.phone_number ?? ""}</div>
                 </div>
               </div>
 
@@ -112,9 +124,11 @@ const Contact = () => {
                 </div>
                 <div>
                   <div className="font-medium">Location</div>
-                  <div className="text-muted-foreground">San Francisco, CA</div>
+                  <div className="text-muted-foreground">{info?.location ?? ""}</div>
                 </div>
               </div>
+                </>
+              )}
             </div>
 
             {/* Prominent booking card */}
@@ -133,7 +147,7 @@ const Contact = () => {
                     className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 w-full sm:w-auto"
                   >
                     <a
-                      href="https://calendar.google.com/calendar/appointments/schedules/YOUR_SCHEDULE_ID"
+                      href={info?.book_meeting_link ?? "#"}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -144,19 +158,10 @@ const Contact = () => {
                 </div>
               </div>
             </Card>
-
-            <Card className="p-6 bg-gradient-subtle border-border">
-              <h4 className="font-semibold text-lg mb-3">Project Timeline</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>• Initial consultation: 1–2 days</li>
-                <li>• Proposal &amp; planning: 3–5 days</li>
-                <li>• Development: 1–4 weeks</li>
-                <li>• Testing &amp; launch: 3–7 days</li>
-              </ul>
-            </Card>
-          </div>
+          </Reveal>
 
           {/* Contact Form */}
+          <Reveal direction="left" className="h-full">
           <Card className="p-8">
             <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
             <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -254,6 +259,7 @@ const Contact = () => {
               </Button>
             </form>
           </Card>
+          </Reveal>
         </div>
       </div>
     </section>

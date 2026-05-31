@@ -1,6 +1,8 @@
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { useGeneralInformation } from "@/hooks/useSiteData";
 
 const Footer = () => {
+  const { data: info } = useGeneralInformation();
   const currentYear = new Date().getFullYear();
   const links = [
     { id: "about", label: "About" },
@@ -30,11 +32,11 @@ const Footer = () => {
               infrastructure for modern businesses.
             </p>
             <a
-              href="mailto:hello@bir.tech"
+              href={`mailto:${info?.email ?? "hello@bir.tech"}`}
               className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
             >
               <Mail className="h-4 w-4" />
-              hello@bir.tech
+              {info?.email ?? "hello@bir.tech"}
             </a>
           </div>
 
@@ -61,14 +63,16 @@ const Footer = () => {
             </h3>
             <div className="flex space-x-3">
               {[
-                { Icon: Github, label: "GitHub" },
-                { Icon: Linkedin, label: "LinkedIn" },
-                { Icon: Twitter, label: "Twitter" },
-              ].map(({ Icon, label }) => (
+                { Icon: Github, label: "GitHub", href: "#" },
+                { Icon: Linkedin, label: "LinkedIn", href: info?.linkedin_link ?? "#" },
+                { Icon: Twitter, label: "Twitter", href: "#" },
+              ].map(({ Icon, label, href }) => (
                 <a
                   key={label}
-                  href="#"
+                  href={href}
                   aria-label={label}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="p-2 rounded-lg bg-background border border-border hover:bg-gradient-primary hover:text-primary-foreground hover:border-transparent transition-all duration-300"
                 >
                   <Icon className="h-4 w-4" />

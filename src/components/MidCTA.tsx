@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
+import { Reveal } from "@/components/motion";
 
 const MidCTA = () => {
   const scrollTo = (id: string) =>
@@ -7,9 +9,13 @@ const MidCTA = () => {
 
   return (
     <section className="py-16 bg-primary text-primary-foreground relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,hsl(var(--primary-glow)/0.4),transparent_60%)]" />
+      <motion.div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_80%_50%,hsl(var(--primary-glow)/0.4),transparent_60%)]"
+        animate={{ opacity: [0.6, 1, 0.6] }}
+        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      />
       <div className="container relative mx-auto px-6">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        <Reveal className="flex flex-col md:flex-row items-center justify-between gap-8">
           <div className="max-w-2xl text-center md:text-left">
             <h3 className="text-2xl md:text-3xl font-bold mb-2">
               Have a project in mind?
@@ -36,7 +42,7 @@ const MidCTA = () => {
               See Our Work
             </Button>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

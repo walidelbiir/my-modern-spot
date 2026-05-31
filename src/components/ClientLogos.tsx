@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/motion";
+
 const clients = [
   "ACME CORP",
   "NORTHWIND",
@@ -17,11 +19,11 @@ const ClientLogos = () => {
   return (
     <section className="py-16 bg-background border-y border-border overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-10">
+        <Reveal className="text-center mb-10">
           <div className="text-xs tracking-[0.25em] uppercase text-muted-foreground">
             Trusted by teams at
           </div>
-        </div>
+        </Reveal>
       </div>
 
       <div className="relative">

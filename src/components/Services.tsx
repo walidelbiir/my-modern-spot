@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Code2, GitBranch, Bot, ArrowRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Reveal, Stagger, StaggerItem, TiltCard } from "@/components/motion";
 
 const services = [
   {
@@ -56,7 +57,7 @@ const Services = () => {
   return (
     <section id="services" className="py-24 bg-gradient-subtle">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16 max-w-2xl mx-auto">
+        <Reveal className="text-center mb-16 max-w-2xl mx-auto">
           <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
             What we do
           </div>
@@ -69,18 +70,19 @@ const Services = () => {
           <p className="text-lg text-muted-foreground">
             Strategy, execution, and operations — delivered end-to-end by senior engineers.
           </p>
-        </div>
+        </Reveal>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {services.map((service) => {
             const Icon = service.icon;
             return (
+              <StaggerItem key={service.title} className="h-full">
+                <TiltCard className="h-full">
               <Card
-                key={service.title}
                 className={cn(
-                  "relative p-7 transition-all duration-300 group hover:-translate-y-2",
+                  "relative p-7 transition-shadow duration-300 group h-full",
                   service.featured
-                    ? "bg-primary text-primary-foreground border-primary shadow-elegant lg:-translate-y-2"
+                    ? "bg-primary text-primary-foreground border-primary shadow-elegant"
                     : "hover:shadow-elegant"
                 )}
               >
@@ -165,9 +167,11 @@ const Services = () => {
                   </div>
                 </div>
               </Card>
+                </TiltCard>
+              </StaggerItem>
             );
           })}
-        </div>
+        </Stagger>
       </div>
     </section>
   );

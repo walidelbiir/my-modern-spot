@@ -10,10 +10,12 @@ import Testimonials from "../components/Testimonials";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import BackToTop from "../components/BackToTop";
+import { ScrollProgress } from "@/components/motion";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <ScrollProgress />
       <Header />
       <main>
         <Hero />
