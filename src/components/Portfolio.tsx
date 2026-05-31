@@ -122,13 +122,13 @@ const Portfolio = () => {
         </div>
 
         <TooltipProvider>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {filtered.map((project) => {
               const slug = portfolioSlugMap[project.title] ?? project.title.toLowerCase().replace(/\s+/g, "-");
               return (
               <Card
                 key={project.title}
-                className="overflow-hidden hover:shadow-elegant hover:-translate-y-2 transition-all duration-300 group"
+                className="overflow-hidden hover:shadow-elegant hover:-translate-y-2 transition-all duration-300 group flex flex-col h-full"
               >
                 <Link to={`/portfolio/${slug}`} className="block">
                   <div
@@ -149,7 +149,7 @@ const Portfolio = () => {
                   </div>
                 </Link>
 
-                <div className="p-6 space-y-4">
+                <div className="p-6 space-y-4 flex flex-col flex-1">
                   <div>
                     <Badge variant="outline" className="mb-2 text-xs">
                       {project.category}
@@ -168,7 +168,8 @@ const Portfolio = () => {
                     ))}
                   </div>
 
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-2 pt-2 mt-auto">
+
                     <Button asChild variant="default" size="sm" className="flex-1">
                       <Link to={`/portfolio/${slug}`}>
                         <ExternalLink className="h-3 w-3 mr-1" />
