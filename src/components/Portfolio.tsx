@@ -128,7 +128,7 @@ const Portfolio = () => {
               return (
               <Card
                 key={project.title}
-                className="overflow-hidden hover:shadow-elegant hover:-translate-y-2 transition-all duration-300 group"
+                className="overflow-hidden hover:shadow-elegant hover:-translate-y-2 transition-all duration-300 group flex flex-col h-full"
               >
                 <Link to={`/portfolio/${slug}`} className="block">
                   <div
