@@ -168,7 +168,8 @@ const Portfolio = () => {
                     ))}
                   </div>
 
-                  <div className="flex gap-2 pt-2">
+                  <div className="flex gap-2 pt-2 mt-auto">
+
                     <Button asChild variant="default" size="sm" className="flex-1">
                       <Link to={`/portfolio/${slug}`}>
                         <ExternalLink className="h-3 w-3 mr-1" />
