@@ -34,9 +34,11 @@ const Portfolio = () => {
           <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
             Selected work
           </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-4xl lg:text-5xl font-bold mb-4 leading-[1.15]">
             Recent{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">projects</span>
+            <span className="inline-block bg-gradient-primary bg-clip-text text-transparent pb-0.5">
+              projects
+            </span>
           </h2>
           <p className="text-lg text-muted-foreground">
             A snapshot of the platforms, pipelines, and AI systems we've shipped.

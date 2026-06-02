@@ -38,7 +38,10 @@ export function WordReveal({ segments, className, delay = 0, onMount = false }: 
     const words = segment.text.split(" ");
     words.forEach((w, wIdx) => {
       nodes.push(
-        <span key={`w-${key++}`} className="inline-block overflow-hidden align-bottom">
+        <span
+          key={`w-${key++}`}
+          className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]"
+        >
           <motion.span variants={word} className={`inline-block ${segment.className ?? ""}`}>
             {w}
           </motion.span>

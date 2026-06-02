@@ -438,21 +438,28 @@ const ImplementationLayout = ({
   <div className="w-full space-y-10">
     <SectionHeader label={section.label} accent={accent} headline={section.headline} body={section.body} />
     <div className="grid lg:grid-cols-[1.2fr_1fr] gap-10 items-start">
-      <div className="relative pl-6 border-l-2 border-violet-500/30 space-y-0">
+      <div className="space-y-0">
         {MIGRATION_PHASES.map((p, i) => (
           <div
             key={p.phase}
-            className={cn("relative pb-8 last:pb-0", staggerClass(isActive))}
+            className={cn("flex gap-4", staggerClass(isActive))}
             style={isActive ? { animationDelay: `${100 + i * 120}ms` } : undefined}
           >
-            <div
-              className="absolute -left-[calc(0.75rem+1px)] top-1 h-6 w-6 rounded-full border-2 bg-[#0d1117] flex items-center justify-center text-[10px] font-bold"
-              style={{ borderColor: accent, color: accent }}
-            >
-              {p.phase}
+            <div className="flex flex-col items-center shrink-0 w-10">
+              <div
+                className="h-9 w-9 rounded-full border-2 bg-[#0d1117] flex items-center justify-center text-[10px] font-bold leading-none"
+                style={{ borderColor: accent, color: accent }}
+              >
+                {p.phase}
+              </div>
+              {i < MIGRATION_PHASES.length - 1 && (
+                <div className="w-px flex-1 min-h-6 my-1 bg-violet-500/30" aria-hidden />
+              )}
             </div>
-            <h3 className="text-white font-semibold mb-1">{p.title}</h3>
-            <p className="text-sm text-slate-400">{p.desc}</p>
+            <div className={cn("flex-1 min-w-0", i < MIGRATION_PHASES.length - 1 ? "pb-8" : "pb-0")}>
+              <h3 className="text-white font-semibold mb-1 leading-snug">{p.title}</h3>
+              <p className="text-sm text-slate-400 leading-relaxed">{p.desc}</p>
+            </div>
           </div>
         ))}
       </div>

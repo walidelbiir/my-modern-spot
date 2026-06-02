@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
 import type { RefObject, ReactNode } from "react";
-import { cn } from "@/lib/utils";
-import { SLIDE_LABELS } from "@/hooks/useCaseStudyScroll";
 
 type CaseStudyShellProps = {
   accent: string;
@@ -11,7 +9,7 @@ type CaseStudyShellProps = {
   children: ReactNode;
 };
 
-export function CaseStudyShell({ accent, index, go, scrollerRef, children }: CaseStudyShellProps) {
+export function CaseStudyShell({ accent, index, scrollerRef, children }: CaseStudyShellProps) {
   return (
     <div className="fixed inset-0 bg-[#0f172a] text-slate-100 font-sans">
       <Link
@@ -27,39 +25,12 @@ export function CaseStudyShell({ accent, index, go, scrollerRef, children }: Cas
         BIR<span style={{ color: accent }}>.</span>
       </Link>
 
-      <div className="md:hidden fixed top-16 left-0 right-0 z-40 h-1 bg-white/5">
+      <div className="fixed top-16 left-0 right-0 z-40 h-1 bg-white/5">
         <div
           className="h-full transition-all duration-500"
           style={{ width: `${((index + 1) / 6) * 100}%`, background: accent }}
         />
       </div>
-
-      <nav className="hidden md:flex fixed right-6 top-1/2 -translate-y-1/2 z-50 flex-col gap-4">
-        {SLIDE_LABELS.map((label, i) => (
-          <button
-            key={label}
-            onClick={() => go(i)}
-            className="group flex items-center gap-3 text-right"
-            aria-label={`Go to ${label}`}
-          >
-            <span
-              className={cn(
-                "text-xs tracking-wider uppercase transition-opacity",
-                index === i ? "opacity-100 text-white" : "opacity-0 group-hover:opacity-60 text-slate-300"
-              )}
-            >
-              {label}
-            </span>
-            <span
-              className={cn(
-                "h-3 w-3 rounded-full border transition-all",
-                index === i ? "border-transparent scale-110" : "border-slate-500 hover:border-slate-300"
-              )}
-              style={index === i ? { background: accent, boxShadow: `0 0 12px ${accent}` } : undefined}
-            />
-          </button>
-        ))}
-      </nav>
 
       <div
         ref={scrollerRef}
@@ -80,10 +51,9 @@ export function CaseStudySlide({ children }: { children: ReactNode }) {
 export function Watermark({ n, isActive }: { n: string; isActive: boolean }) {
   return (
     <span
-      className={cn(
-        "pointer-events-none select-none absolute -left-4 md:left-4 top-1/2 -translate-y-1/2 font-black leading-none text-white",
-        isActive && "animate-watermark-enter"
-      )}
+      className={`pointer-events-none select-none absolute -left-4 md:left-4 top-1/2 -translate-y-1/2 font-black leading-none text-white${
+        isActive ? " animate-watermark-enter" : ""
+      }`}
       style={{ fontSize: "25vw", opacity: isActive ? undefined : 0.05 }}
     >
       {n}

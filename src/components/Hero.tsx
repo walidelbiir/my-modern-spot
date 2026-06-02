@@ -116,7 +116,7 @@ const Hero = () => {
               IT Services • DevOps • AI Agents
             </motion.div>
 
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-tight">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.12] tracking-tight pb-0.5">
               <WordReveal
                 onMount
                 delay={0.2}
