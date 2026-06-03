@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "motion/react";
 import { Reveal } from "@/components/motion";
 import { EASE, VIEWPORT } from "@/lib/motion";
+import { ProjectCardArt } from "@/components/portfolio/ProjectCardArt";
 
 type Category = "All" | "Design & Development" | "DevOps Projects" | "AI Agents Integration";
 
@@ -103,20 +104,11 @@ const Portfolio = () => {
                   className="overflow-hidden hover:shadow-elegant hover:-translate-y-2 transition-all duration-300 group flex flex-col h-full"
                 >
                   <Link to={`/portfolio/${project.slug}`} className="block">
-                    <div
-                      className={cn(
-                        "aspect-video relative overflow-hidden bg-gradient-to-br",
-                        project.gradient
-                      )}
-                    >
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-6xl font-bold text-white/20 group-hover:scale-110 transition-transform duration-500">
-                          {project.initials}
-                        </span>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      <div className="absolute bottom-3 left-3 right-3 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                        <span className="text-xs text-white/90 font-medium">View case study →</span>
+                    <div className="aspect-video relative overflow-hidden">
+                      <ProjectCardArt slug={project.slug} initials={project.initials} />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-60 group-hover:opacity-90 transition-opacity duration-300" />
+                      <div className="absolute bottom-3 left-3 right-3 translate-y-2 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 z-10">
+                        <span className="text-xs text-white font-medium tracking-wide">View case study →</span>
                       </div>
                     </div>
                   </Link>
