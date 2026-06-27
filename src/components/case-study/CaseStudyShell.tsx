@@ -9,26 +9,26 @@ type CaseStudyShellProps = {
   children: ReactNode;
 };
 
-export function CaseStudyShell({ accent, index, scrollerRef, children }: CaseStudyShellProps) {
+export function CaseStudyShell({ index, scrollerRef, children }: CaseStudyShellProps) {
   return (
-    <div className="fixed inset-0 bg-[#0f172a] text-slate-100 font-sans">
+    <div className="fixed inset-0 bg-[#0d0d0c] text-[#f2eee5] font-sans">
       <Link
         to="/#portfolio"
-        className="fixed top-6 left-6 z-50 inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white transition-colors bg-[#0f172a]/60 backdrop-blur px-3 py-1.5 rounded-full border border-white/10"
+        className="fixed top-6 left-6 z-50 inline-flex items-center gap-2 border-2 border-[#f2eee5] bg-[#0d0d0c]/70 px-3 py-1.5 font-mono text-xs uppercase tracking-[0.12em] text-[#f2eee5] backdrop-blur transition-colors hover:bg-[#ffe70a] hover:text-[#0d0d0c] hover:border-[#ffe70a]"
       >
-        ← Back to Portfolio
+        ← Back to Work
       </Link>
       <Link
         to="/"
-        className="fixed top-6 right-6 z-50 text-sm font-semibold tracking-wide text-white"
+        className="fixed top-6 right-6 z-50 text-lg font-extrabold tracking-[-0.05em] text-[#f2eee5]"
       >
-        BIR<span style={{ color: accent }}>.</span>
+        B<span style={{ color: "#ffe70a" }}>!</span>R
       </Link>
 
-      <div className="fixed top-16 left-0 right-0 z-40 h-1 bg-white/5">
+      <div className="fixed top-16 left-0 right-0 z-40 h-1.5 bg-white/10">
         <div
           className="h-full transition-all duration-500"
-          style={{ width: `${((index + 1) / 6) * 100}%`, background: accent }}
+          style={{ width: `${((index + 1) / 6) * 100}%`, background: "#ffe70a" }}
         />
       </div>
 
@@ -87,18 +87,20 @@ export function SectionHeader({
 
 export function CaseStudyLoading() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f172a] text-slate-200 gap-4">
-      <p className="text-slate-400 animate-pulse">Loading case study…</p>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0d0d0c] text-[#f2eee5] gap-4">
+      <p className="font-mono text-xs uppercase tracking-[0.25em] text-[#f2eee5]/60 animate-pulse">
+        Loading case study…
+      </p>
     </div>
   );
 }
 
 export function CaseStudyNotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f172a] text-slate-200 gap-4">
-      <p>Case study not found.</p>
-      <Link to="/#portfolio" className="text-sky-400 hover:underline">
-        ← Back to Portfolio
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#0d0d0c] text-[#f2eee5] gap-4">
+      <p className="font-mono text-sm uppercase tracking-[0.15em]">Case study not found.</p>
+      <Link to="/#portfolio" className="text-[#ffe70a] underline-offset-4 hover:underline">
+        ← Back to Work
       </Link>
     </div>
   );

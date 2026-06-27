@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
@@ -7,11 +6,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { EASE } from "@/lib/motion";
 
 const NAV_ITEMS = [
-  { id: "about", label: "About" },
-  { id: "services", label: "Services" },
-  { id: "process", label: "Process" },
-  { id: "portfolio", label: "Portfolio" },
-  { id: "testimonials", label: "Testimonials" },
+  { id: "about", label: "How we ship" },
+  { id: "services", label: "Capabilities" },
+  { id: "portfolio", label: "Work" },
+  { id: "testimonials", label: "Quality" },
   { id: "contact", label: "Contact" },
 ];
 
@@ -38,96 +36,102 @@ const Header = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: EASE }}
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300",
+        "fixed top-0 w-full z-50 border-b transition-colors duration-300",
         scrolled
-          ? "bg-background/90 backdrop-blur-md border-b shadow-card"
-          : "bg-background/60 backdrop-blur-sm border-b border-transparent"
+          ? "bg-background/95 backdrop-blur-sm border-foreground/10"
+          : "bg-background/80 backdrop-blur-sm border-foreground/10"
       )}
     >
-      <div className="container mx-auto px-6 py-4">
-        <nav className="flex items-center justify-between">
+      <div className="max-w-[1180px] mx-auto px-10">
+        <nav className="flex items-center justify-between h-[4.5rem]">
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="flex items-baseline gap-2"
-            aria-label="BIR Solutions home"
+            className="flex items-center gap-2.5"
+            aria-label="B!R home"
           >
-            <span className="text-2xl font-bold tracking-tight text-primary">BIR</span>
-            <span className="text-[0.7rem] font-semibold tracking-[0.18em] uppercase text-muted-foreground">
-              Solutions
+            <span className="font-bold text-xl tracking-[-0.02em]">B!R</span>
+            <span className="hidden sm:block font-mono text-[10px] tracking-[0.16em] uppercase text-muted-foreground border border-foreground/18 px-[7px] py-[3px] rounded-[5px]">
+              AI-First Studio
             </span>
           </button>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-7">
+          <div className="hidden md:flex items-center gap-8">
             {NAV_ITEMS.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
                 className={cn(
-                  "relative text-sm transition-colors py-1",
+                  "text-[14.5px] transition-colors",
                   active === item.id
-                    ? "text-primary font-semibold"
-                    : "text-muted-foreground hover:text-primary"
+                    ? "text-foreground font-medium"
+                    : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 {item.label}
-                <span
-                  className={cn(
-                    "absolute left-0 right-0 -bottom-0.5 h-0.5 bg-gradient-primary rounded-full transition-transform duration-300 origin-left",
-                    active === item.id ? "scale-x-100" : "scale-x-0"
-                  )}
-                />
               </button>
             ))}
-            <Button variant="hero" onClick={() => scrollToSection("contact")}>
-              Get Started
-            </Button>
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="text-[14px] font-semibold bg-foreground text-background px-5 py-2.5 rounded-lg transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-elegant active:translate-y-0 active:scale-[0.98]"
+            >
+              Start a project
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2"
+            className="md:hidden flex h-9 w-9 items-center justify-center border border-foreground/20 rounded-lg"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X /> : <Menu />}
+            {isMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </nav>
-
-        {/* Mobile Menu */}
-        <AnimatePresence>
-          {isMenuOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3, ease: EASE }}
-              className="md:hidden overflow-hidden"
-            >
-              <div className="mt-4 pb-4 space-y-2">
-                {NAV_ITEMS.map((item, i) => (
-                  <motion.button
-                    key={item.id}
-                    initial={{ opacity: 0, x: -12 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.25, ease: EASE, delay: i * 0.04 }}
-                    onClick={() => scrollToSection(item.id)}
-                    className={cn(
-                      "block w-full text-left py-2 transition-colors",
-                      active === item.id ? "text-primary font-semibold" : "text-muted-foreground"
-                    )}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-                <Button variant="hero" className="w-full" onClick={() => scrollToSection("contact")}>
-                  Get Started
-                </Button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: EASE }}
+            className="md:hidden overflow-hidden border-t border-foreground/10 bg-background"
+          >
+            <div className="max-w-[1180px] mx-auto px-10 py-4 space-y-1">
+              {NAV_ITEMS.map((item, i) => (
+                <motion.button
+                  key={item.id}
+                  initial={{ opacity: 0, x: -12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.25, ease: EASE, delay: i * 0.04 }}
+                  onClick={() => scrollToSection(item.id)}
+                  className={cn(
+                    "flex w-full items-center gap-3 py-2.5 text-sm transition-colors",
+                    active === item.id ? "text-foreground font-medium" : "text-muted-foreground"
+                  )}
+                >
+                  <span
+                    className={cn(
+                      "h-1.5 w-1.5 rounded-full",
+                      active === item.id ? "bg-accent" : "bg-muted-foreground/40"
+                    )}
+                  />
+                  {item.label}
+                </motion.button>
+              ))}
+              <button
+                onClick={() => scrollToSection("contact")}
+                className="w-full mt-3 text-[14px] font-semibold bg-foreground text-background py-3 rounded-lg"
+              >
+                Start a project
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };

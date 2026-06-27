@@ -62,9 +62,7 @@ function mapSection(
 const HERO_COLORS: Record<string, string> = {
   "preview-system-design": "#0ea5e9",
   "gcp-cloud-migration": "#4285F4",
-  "financial-analytics-dashboard": "#10b981",
   "e-commerce-platform": "#f43f5e",
-  "smart-manufacturing-iot": "#06b6d4",
   "multi-cloud-deployment": "#6366f1",
 };
 

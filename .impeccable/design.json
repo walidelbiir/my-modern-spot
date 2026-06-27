@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-16T00:00:00Z",
+  "title": "Design System: B!R Technologies",
+  "extensions": {
+    "colorMeta": {
+      "bone-paper":      { "role": "neutral",   "displayName": "Bone Paper",     "canonical": "hsl(44 38% 92%)", "tonalRamp": ["#2E2A24","#4A453D","#66615A","#837D74","#A09890","#C0BAB0","#D9D5CB","#F2EEE3"] },
+      "ink-black":       { "role": "primary",   "displayName": "Press Black",    "canonical": "hsl(30 8% 8%)",  "tonalRamp": ["#0A0908","#161413","#232020","#302D2B","#3E3B39","#4C4947","#5A5755","#6A6764"] },
+      "card-surface":    { "role": "neutral",   "displayName": "Lifted Paper",   "canonical": "hsl(40 40% 97%)","tonalRamp": ["#302A20","#4D4539","#6B5F50","#897969","#A89486","#C4B4A8","#DCCEC6","#FAF6F4"] },
+      "secondary-paper": { "role": "neutral",   "displayName": "Gallery Paper",  "canonical": "hsl(42 22% 86%)","tonalRamp": ["#29251F","#403B32","#585146","#706959","#897F6E","#A39880","#BFBA98","#E3DED3"] },
+      "proof-mark":      { "role": "tertiary",  "displayName": "Proof Mark",     "canonical": "hsl(54 100% 52%)","tonalRamp": ["#3D3300","#6B5900","#99800A","#C7A714","#E8C800","#FFE70A","#FFEf4D","#FFFAD0"] },
+      "muted-ash":       { "role": "neutral",   "displayName": "Muted Ash",      "canonical": "hsl(30 5% 38%)", "tonalRamp": ["#1A1715","#2A2725","#3A3735","#4A4745","#5A5755","#6A6764","#847E7C","#A09A98"] },
+      "deep-ink":        { "role": "neutral",   "displayName": "Deep Ink",       "canonical": "hsl(30 8% 7%)",  "tonalRamp": ["#080706","#131210","#1E1C1A","#2A2826","#363431","#42403D","#4F4D4A","#5C5A57"] },
+      "destructive":     { "role": "neutral",   "displayName": "Error Red",      "canonical": "hsl(6 78% 50%)", "tonalRamp": ["#3A0900","#6B1200","#9E1E00","#C82A0D","#E3301C","#F06050","#F59080","#FDC8BC"] }
+    },
+    "typographyMeta": {
+      "display":  { "displayName": "Display",  "purpose": "Hero headlines only. One per page. Always uppercase." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings. Uppercase. Often uses mark-accent on one word." },
+      "title":    { "displayName": "Title",    "purpose": "Sub-headers, card titles, featured labels. Mixed-case." },
+      "body":     { "displayName": "Body",     "purpose": "Prose and descriptions. Max 65–75ch. Muted Ash when secondary." },
+      "label":    { "displayName": "Label",    "purpose": "Space Mono. Nav items, eyebrow annotations, metadata. Always uppercase." }
+    },
+    "shadows": [
+      { "name": "card-shadow",     "value": "4px 4px 0 0 #161413",  "purpose": "Standard hard-offset lift. Interactive cards and default button hover." },
+      { "name": "elegant-shadow",  "value": "8px 8px 0 0 #161413",  "purpose": "Heavy lift for featured cards, modals, and hero surfaces." },
+      { "name": "proof-mark-glow", "value": "6px 6px 0 0 #FFE70A",  "purpose": "Ink button hover only. The one place yellow enters the shadow layer." },
+      { "name": "dark-card-shadow","value": "4px 4px 0 0 #F2EEE3",  "purpose": "Dark mode inverted offset shadow. Same geometry, bone-colored." }
+    ],
+    "motion": [
+      { "name": "ease-standard",  "value": "cubic-bezier(0.2, 0, 0, 1)",        "purpose": "Default state transitions. 200ms." },
+      { "name": "ease-enter",     "value": "cubic-bezier(0.22, 1, 0.36, 1)",    "purpose": "Entrance animations (slide-enter-from-bottom/top). 650ms." },
+      { "name": "ease-fade",      "value": "ease-out",                           "purpose": "Fade-in/fade-up. 600–700ms." },
+      { "name": "duration-short", "value": "150ms",                              "purpose": "Micro-interactions: button transforms, hover fills." },
+      { "name": "duration-base",  "value": "200ms",                              "purpose": "State transitions, color changes." },
+      { "name": "duration-enter", "value": "650ms",                              "purpose": "Section entrance animations." }
+    ],
+    "breakpoints": [
+      { "name": "sm",  "value": "640px"  },
+      { "name": "md",  "value": "768px"  },
+      { "name": "lg",  "value": "1024px" },
+      { "name": "xl",  "value": "1280px" },
+      { "name": "2xl", "value": "1400px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Hero Button",
+      "kind": "button",
+      "refersTo": "button-hero",
+      "description": "Primary CTA. Proof Mark yellow fill, Press Black border and text. Hard lift on hover.",
+      "html": "<button class=\"ds-btn-hero\">Start a Project <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"5\" y1=\"12\" x2=\"19\" y2=\"12\"/><polyline points=\"12 5 19 12 12 19\"/></svg></button>",
+      "css": ".ds-btn-hero { display: inline-flex; align-items: center; gap: 8px; height: 56px; padding: 0 32px; background: #FFE70A; color: #161413; border: 2px solid #161413; border-radius: 0; font-family: 'Archivo', sans-serif; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: transform 150ms cubic-bezier(0.2,0,0,1), box-shadow 150ms cubic-bezier(0.2,0,0,1); box-shadow: none; } .ds-btn-hero:hover { transform: translate(-3px, -3px); box-shadow: 4px 4px 0 0 #161413; } .ds-btn-hero:active { transform: translate(0,0); box-shadow: none; } .ds-btn-hero:focus-visible { outline: 2px solid #FFE70A; outline-offset: 2px; }"
+    },
+    {
+      "name": "Ink Button",
+      "kind": "button",
+      "refersTo": "button-default",
+      "description": "Secondary CTA. Press Black fill, Bone Paper text. Lifts onto Proof Mark glow shadow on hover.",
+      "html": "<button class=\"ds-btn-ink\">See the Work</button>",
+      "css": ".ds-btn-ink { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; background: #161413; color: #F2EEE3; border: 2px solid #161413; border-radius: 0; font-family: 'Archivo', sans-serif; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: transform 150ms cubic-bezier(0.2,0,0,1), box-shadow 150ms cubic-bezier(0.2,0,0,1); } .ds-btn-ink:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 0 #FFE70A; } .ds-btn-ink:active { transform: translate(0,0); box-shadow: none; } .ds-btn-ink:focus-visible { outline: 2px solid #FFE70A; outline-offset: 2px; }"
+    },
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Tertiary action. Transparent fill, 2px ink border. Fills to Press Black on hover.",
+      "html": "<button class=\"ds-btn-outline\">Learn More</button>",
+      "css": ".ds-btn-outline { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 20px; background: transparent; color: #161413; border: 2px solid #161413; border-radius: 0; font-family: 'Archivo', sans-serif; font-size: 0.875rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; cursor: pointer; transition: background 200ms cubic-bezier(0.2,0,0,1), color 200ms cubic-bezier(0.2,0,0,1); } .ds-btn-outline:hover { background: #161413; color: #F2EEE3; } .ds-btn-outline:focus-visible { outline: 2px solid #FFE70A; outline-offset: 2px; }"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card-default",
+      "description": "Standard bordered surface. 2px ink border, zero radius, no blur.",
+      "html": "<div class=\"ds-card\"><h3 class=\"ds-card-title\">Design &amp; Development</h3><p class=\"ds-card-body\">Product engineering for web and mobile — from design systems to production-ready apps.</p></div>",
+      "css": ".ds-card { background: #FAF6F4; border: 2px solid #161413; border-radius: 0; padding: 24px; font-family: 'Archivo', sans-serif; transition: transform 200ms cubic-bezier(0.2,0,0,1), box-shadow 200ms cubic-bezier(0.2,0,0,1); } .ds-card:hover { transform: translate(-3px,-3px); box-shadow: 4px 4px 0 0 #161413; } .ds-card-title { font-size: 1.5rem; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; color: #161413; margin-bottom: 8px; } .ds-card-body { font-size: 0.875rem; line-height: 1.6; color: #66615C; }"
+    },
+    {
+      "name": "Input",
+      "kind": "input",
+      "refersTo": "input-default",
+      "description": "Text field. 2px ink border, Proof Mark focus ring, zero radius.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Your project brief...\">",
+      "css": ".ds-input { display: flex; height: 48px; width: 100%; background: #F2EEE3; color: #161413; border: 2px solid #161413; border-radius: 0; padding: 0 12px; font-family: 'Archivo', sans-serif; font-size: 0.875rem; outline: none; transition: box-shadow 150ms cubic-bezier(0.2,0,0,1); } .ds-input::placeholder { color: #66615C; } .ds-input:focus { box-shadow: 0 0 0 2px #FFE70A; } .ds-input:disabled { opacity: 0.5; cursor: not-allowed; }"
+    },
+    {
+      "name": "Eyebrow Label",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Section annotation. Space Mono, uppercase, tracking-wide. Proof Mark square precedes via ::before. The system's fingerprint.",
+      "html": "<span class=\"ds-eyebrow\">What We Do</span>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 400; text-transform: uppercase; letter-spacing: 0.25em; color: #161413; } .ds-eyebrow::before { content: ''; display: inline-block; width: 12px; height: 12px; background: #FFE70A; flex-shrink: 0; }"
+    },
+    {
+      "name": "Terminal Block",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The hero's signature panel. Press Black surface, Proof Mark accent for success lines and cursor. Hard yellow glow shadow.",
+      "html": "<div class=\"ds-terminal\"><div class=\"ds-terminal-bar\"><span class=\"ds-terminal-dot\"></span><span class=\"ds-terminal-dot\"></span><span class=\"ds-terminal-dot ds-terminal-dot--active\"></span><span class=\"ds-terminal-addr\">deploy.bir.tech</span></div><div class=\"ds-terminal-body\"><div class=\"ds-terminal-line\">$ bir deploy --env=prod</div><div class=\"ds-terminal-line ds-terminal-line--success\">✓ build complete   2.4s</div><div class=\"ds-terminal-line ds-terminal-line--ready\">READY → 99.99% SLA</div></div></div>",
+      "css": ".ds-terminal { background: #161413; border: 2px solid #161413; box-shadow: 6px 6px 0 0 #FFE70A; padding: 24px; font-family: 'Space Mono', monospace; } .ds-terminal-bar { display: flex; align-items: center; gap: 6px; padding-bottom: 12px; margin-bottom: 16px; border-bottom: 1px solid rgba(242,238,227,0.2); } .ds-terminal-dot { width: 12px; height: 12px; background: rgba(242,238,227,0.4); } .ds-terminal-dot--active { background: #FFE70A; } .ds-terminal-addr { margin-left: auto; font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.18em; color: rgba(242,238,227,0.5); } .ds-terminal-body { font-size: 0.8rem; line-height: 1.8; color: rgba(242,238,227,0.85); } .ds-terminal-line--success { color: rgba(242,238,227,0.85); } .ds-terminal-line--success::first-letter { color: #FFE70A; } .ds-terminal-line--ready { display: inline-block; background: #FFE70A; color: #161413; font-weight: 700; padding: 0 4px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Workshop Wall",
+    "overview": "This system is the visual language of a senior engineering team — not an agency pitching itself, but engineers talking to engineers. The Workshop Wall is the physical metaphor: a workspace where tools hang in exactly the right place, surfaces are worn in by use, and every mark means something. Nothing is hung for decoration. The ink is real. The structure is load-bearing.\n\nThe aesthetic is brutalist editorial: bone paper as the working surface, near-black ink as the primary mark, and a single Proof Mark yellow for the moments that demand attention. Hard offset shadows replace ambient blur — depth here is structural, like blocks pressed onto a page, not atmospheric. Zero border radius. Heavy type at tight leading. The system is direct, dense where it needs to be, and deliberately quiet everywhere else.\n\nWhat this system explicitly rejects: the generic SaaS template (cream backgrounds, rounded cards, gradient CTAs), the Big-4 consulting firm aesthetic (stiff navy-and-white corporate stillness), the freelancer portfolio (personal, scrappy, under-produced), and the overdesigned agency showreel (motion performing creativity rather than serving it).",
+    "keyCharacteristics": [
+      "Bone paper on near-black ink — contrast that reads as physical, not digital",
+      "Zero border radius — no rounding anywhere; corners are decisions",
+      "Hard offset shadows with no blur — depth through geometry, not atmosphere",
+      "Archivo extrabold for display; Space Mono for labels and code contexts",
+      "Proof Mark yellow used in small, loud doses — its rarity is the system",
+      "mark-accent — yellow highlighter behind inline text, a signature move",
+      "Eyebrow labels as a deliberate brand system: square yellow tick + mono uppercase"
+    ],
+    "rules": [
+      { "name": "The Proof Mark Rule",    "body": "Signal yellow appears on ≤10% of any given screen. When everything is marked, nothing is. Use it once per viewport to name what matters; let the rest recede.", "section": "colors" },
+      { "name": "The Press Rule",         "body": "All hover interactions move toward ink. Outline buttons fill to Press Black; ghost elements fill to Press Black. The metaphor is consistent — pressing always leaves a mark.", "section": "colors" },
+      { "name": "The Ceiling Rule",       "body": "Display headings cap at 5.6rem (~90px). Above that, the page shouts. Below 3.25rem, it loses the physical mass the system needs.", "section": "typography" },
+      { "name": "The Uppercase Discipline","body": "All-caps is used only in Display, Headline, and Label roles. Body and Title text is mixed-case. Using uppercase on descriptive body copy collapses the hierarchy.", "section": "typography" },
+      { "name": "The No-Blur Rule",       "body": "box-shadow: N N 0 0 color — the spread and blur are always zero. A blurred shadow means atmosphere. An unblurred shadow means structure. This system is structural.", "section": "elevation" },
+      { "name": "The State Signal Rule",  "body": "The Proof Mark Glow shadow appears only on the default ink button hover (not hero, not outline). It is the one place where yellow enters the shadow layer.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use 2px Press Black borders on every interactive element — buttons, cards, inputs, and the nav.",
+      "Do use mark-accent on one key word per headline — never on full sentences.",
+      "Do use uppercase only in Display, Headline, and Label roles.",
+      "Do keep the Proof Mark yellow rare: focus rings, active nav indicator, hero button, eyebrow square, mark-accent, cursor blinks, terminal success lines.",
+      "Do write display headings at line-height: 0.9 and letter-spacing: -0.03em.",
+      "Do use hard-offset shadows with zero blur (4px 4px 0 0). Never gaussian shadows.",
+      "Do cap display headings at 5.6rem. Test at all breakpoints — overflow is a system failure.",
+      "Do verify Muted Ash text against its background before use."
+    ],
+    "donts": [
+      "Don't add border-radius anywhere. Zero radius is non-negotiable.",
+      "Don't use the Proof Mark yellow as a background for body content or section fills covering more than ~10% of a screen.",
+      "Don't use gradient text (background-clip: text). Emphasis is weight and scale, not color gradients.",
+      "Don't soften hover states with symmetric ease-in-out transitions. All motion eases out.",
+      "Don't use glassmorphism or backdrop-filter: blur() decoratively.",
+      "Don't produce a generic SaaS landing page — cream backgrounds, rounded cards, gradient CTAs, identical feature grids.",
+      "Don't add eyebrow labels above every section heading. Eyebrows as universal scaffolding are a failure.",
+      "Don't use numbered section markers (01/02/03) as decorative scaffolding.",
+      "Don't use border-left or border-right greater than 1px as a colored accent stripe.",
+      "Don't let the site feel like a freelancer portfolio or a Big-4 consulting deck.",
+      "Don't make motion the point. Animations serve the content, not the other way around."
+    ]
+  }
+}

@@ -1,95 +1,125 @@
-import { Compass, PenTool, Code2, Rocket } from "lucide-react";
 import { motion } from "motion/react";
 import { Reveal } from "@/components/motion";
 import { EASE, VIEWPORT } from "@/lib/motion";
+import { ProcessTrack } from "@/components/process/ProcessTrack";
 
 const steps = [
   {
-    icon: Compass,
-    title: "Discovery",
-    description:
-      "We map the problem, align on outcomes, and define the smallest valuable scope to ship.",
+    n: "01",
+    title: "Frame",
+    ai: "drafts specs & options",
+    you: "set the problem & scope",
   },
   {
-    icon: PenTool,
-    title: "Design",
-    description:
-      "Architecture, UX, and technical decisions documented before a single line of production code.",
+    n: "02",
+    title: "Generate",
+    ai: "writes code, tests, migrations",
+    you: "shape the architecture",
   },
   {
-    icon: Code2,
-    title: "Build",
-    description:
-      "Weekly demos, transparent progress, and engineering practices that hold up under scale.",
+    n: "03",
+    title: "Review",
+    ai: "flags diffs & risks",
+    you: "approve every change",
   },
   {
-    icon: Rocket,
-    title: "Launch & Operate",
-    description:
-      "Automated deploys, observability, and ongoing support — we stay with you after launch.",
+    n: "04",
+    title: "Harden",
+    ai: "generates edge-case tests",
+    you: "sign off on the quality bar",
+  },
+  {
+    n: "05",
+    title: "Ship",
+    ai: "runs deploy & checks",
+    you: "own the release",
+    dark: true,
   },
 ];
 
 const Process = () => {
   return (
-    <section id="process" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <Reveal className="text-center mb-16 max-w-2xl mx-auto">
-          <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
-            How we work
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            A clear, repeatable{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
-              engineering process.
-            </span>
+    <section
+      id="process"
+      className="bg-secondary border-b border-foreground/10"
+    >
+      <div className="max-w-[1180px] mx-auto px-10 py-[118px]">
+        <Reveal>
+          <div className="eyebrow mb-4">How we ship</div>
+        </Reveal>
+        <Reveal delay={0.08}>
+          <h2 className="m-0 mb-3 text-[clamp(2rem,4vw,2.75rem)] font-semibold tracking-[-0.025em] leading-[1.06]">
+            AI accelerates. Engineers decide.
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Predictable delivery, transparent communication, no surprises.
+        </Reveal>
+        <Reveal delay={0.14}>
+          <p className="m-0 mb-14 text-[18px] leading-[1.6] text-muted-foreground max-w-[600px]">
+            Every project runs the same line. AI compresses the busywork at each
+            stage — a senior engineer owns the gate before it advances.
           </p>
         </Reveal>
 
-        <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <motion.div
-            className="hidden lg:block absolute top-12 left-[12%] right-[12%] h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent origin-left"
-            initial={{ scaleX: 0, opacity: 0 }}
-            whileInView={{ scaleX: 1, opacity: 1 }}
-            viewport={VIEWPORT}
-            transition={{ duration: 1.1, ease: EASE, delay: 0.2 }}
-          />
-          {steps.map((step, i) => {
-            const Icon = step.icon;
-            return (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 28 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={VIEWPORT}
-                transition={{ duration: 0.55, ease: EASE, delay: i * 0.12 }}
-                whileHover={{ y: -6 }}
-                className="relative bg-card rounded-2xl p-6 border border-border hover:border-accent/50 hover:shadow-card transition-colors duration-300"
+        {/* scanning point + glowing checkpoints across the stages */}
+        <Reveal delay={0.2} className="mb-12">
+          <ProcessTrack count={steps.length} />
+        </Reveal>
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {steps.map((step, i) => (
+            <motion.div
+              key={step.n}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={VIEWPORT}
+              transition={{ duration: 0.5, ease: EASE, delay: (i % 3) * 0.08 }}
+              className={`flex flex-col rounded-[12px] p-[26px] border transition-[transform,box-shadow] duration-300 ease-out-expo hover:-translate-y-1.5 hover:shadow-elegant ${
+                step.dark
+                  ? "bg-foreground text-background border-foreground"
+                  : "bg-card border-foreground/12"
+              }`}
+            >
+              <div className="font-mono text-[13px] text-accent mb-2.5">{step.n}</div>
+              <h3
+                className={`m-0 mb-4 text-[18px] font-semibold tracking-[-0.01em] ${
+                  step.dark ? "text-background" : "text-foreground"
+                }`}
               >
-                <div className="relative z-10 flex items-center gap-4 mb-4">
-                  <motion.div
-                    initial={{ scale: 0.5, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    viewport={VIEWPORT}
-                    transition={{ duration: 0.45, ease: EASE, delay: 0.3 + i * 0.12 }}
-                    className="h-12 w-12 rounded-xl bg-gradient-primary flex items-center justify-center shadow-card"
+                {step.title}
+              </h3>
+              <div className="flex flex-col gap-2.5">
+                <div className="flex gap-2 items-start">
+                  <span className="font-mono text-[9px] font-bold tracking-[0.06em] uppercase bg-accent text-background px-1.5 py-[3px] rounded-[4px] shrink-0 mt-0.5">
+                    AI
+                  </span>
+                  <span
+                    className={`text-[13px] leading-[1.45] ${
+                      step.dark ? "text-background/70" : "text-muted-foreground"
+                    }`}
                   >
-                    <Icon className="h-5 w-5 text-primary-foreground" />
-                  </motion.div>
-                  <span className="text-3xl font-bold text-muted-foreground/30">
-                    0{i + 1}
+                    {step.ai}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {step.description}
-                </p>
-              </motion.div>
-            );
-          })}
+                <div className="flex gap-2 items-start">
+                  <span
+                    className={`font-mono text-[9px] font-bold tracking-[0.06em] uppercase px-1.5 py-[3px] rounded-[4px] shrink-0 mt-0.5 ${
+                      step.dark
+                        ? "bg-background text-foreground"
+                        : "bg-foreground text-background"
+                    }`}
+                  >
+                    YOU
+                  </span>
+                  <span
+                    className={`text-[13px] leading-[1.45] ${
+                      step.dark ? "text-background/90" : "text-foreground"
+                    }`}
+                  >
+                    {step.you}
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

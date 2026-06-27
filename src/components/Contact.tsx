@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -9,13 +7,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Mail, Phone, MapPin, Send, Calendar, CheckCircle2 } from "lucide-react";
+import { Mail, MapPin, Send, Calendar, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useGeneralInformation } from "@/hooks/useSiteData";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Reveal } from "@/components/motion";
 import { z } from "zod";
+import { STATIC_CONTACT } from "@/lib/static-data";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100),
@@ -25,13 +22,7 @@ const schema = z.object({
 });
 
 const Contact = () => {
-  const { data: info, isLoading } = useGeneralInformation();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    service: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const { toast } = useToast();
@@ -57,176 +48,123 @@ const Contact = () => {
     setTimeout(() => setSubmitted(false), 4000);
   };
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <section id="contact" className="py-24 bg-background">
-      <div className="container mx-auto px-6">
-        <Reveal className="text-center mb-16 max-w-2xl mx-auto">
-          <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
-            Get in touch
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
+    <section id="contact" className="bg-secondary border-b border-foreground/10">
+      <div className="max-w-[1180px] mx-auto px-10 py-[118px]">
+        <Reveal className="mb-14">
+          <div className="eyebrow mb-4">Get in touch</div>
+          <h2 className="m-0 text-[clamp(2rem,4vw,2.75rem)] font-semibold tracking-[-0.025em] leading-[1.06]">
             Let's build{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
-              something great together.
-            </span>
+            <span className="mark-accent">something together.</span>
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="mt-4 text-[18px] leading-[1.6] text-muted-foreground max-w-[500px]">
             Tell us about your project and we'll respond within one business day.
           </p>
         </Reveal>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Information */}
-          <Reveal direction="right" className="space-y-8">
-            <div className="space-y-6">
-              {isLoading ? (
+        <div className="grid gap-12 lg:grid-cols-[300px_1fr] items-start">
+          {/* Contact info */}
+          <div className="flex flex-col gap-0">
+            {[
+              { Icon: Mail, label: "Email", value: STATIC_CONTACT.email, href: `mailto:${STATIC_CONTACT.email}` },
+              { Icon: MapPin, label: "Location", value: STATIC_CONTACT.location, href: undefined },
+            ].map(({ Icon, label, value, href }) => {
+              const inner = (
                 <>
-                  <Skeleton className="h-16 w-full" />
-                  <Skeleton className="h-16 w-full" />
-                  <Skeleton className="h-16 w-full" />
-                </>
-              ) : (
-                <>
-              <a
-                href={`mailto:${info?.email ?? "hello@bir.tech"}`}
-                className="flex items-center space-x-4 group"
-              >
-                <div className="p-3 rounded-lg bg-gradient-primary group-hover:shadow-glow transition-shadow">
-                  <Mail className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <div className="font-medium">Email</div>
-                  <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                    {info?.email ?? "hello@bir.tech"}
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-foreground/6 text-foreground">
+                    <Icon className="h-4 w-4" />
                   </div>
-                </div>
-              </a>
-
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-lg bg-gradient-primary">
-                  <Phone className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <div className="font-medium">Phone</div>
-                  <div className="text-muted-foreground">{info?.phone_number ?? ""}</div>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="p-3 rounded-lg bg-gradient-primary">
-                  <MapPin className="h-5 w-5 text-primary-foreground" />
-                </div>
-                <div>
-                  <div className="font-medium">Location</div>
-                  <div className="text-muted-foreground">{info?.location ?? ""}</div>
-                </div>
-              </div>
+                  <div>
+                    <div className="font-mono text-[10px] tracking-[0.15em] uppercase text-muted-foreground mb-0.5">
+                      {label}
+                    </div>
+                    <div className="font-medium text-[14.5px]">{value}</div>
+                  </div>
                 </>
-              )}
-            </div>
-
-            {/* Prominent booking card */}
-            <Card className="p-6 bg-gradient-primary text-primary-foreground border-primary shadow-elegant">
-              <div className="flex items-start gap-4">
-                <div className="p-3 rounded-lg bg-primary-foreground/10">
-                  <Calendar className="h-6 w-6" />
+              );
+              return href ? (
+                <a
+                  key={label}
+                  href={href}
+                  className="flex items-center gap-3 py-5 border-t border-foreground/10 first:border-t-0 hover:text-accent transition-colors"
+                >
+                  {inner}
+                </a>
+              ) : (
+                <div key={label} className="flex items-center gap-3 py-5 border-t border-foreground/10">
+                  {inner}
                 </div>
-                <div className="flex-1">
-                  <h4 className="font-semibold text-lg mb-1">Or skip the form</h4>
-                  <p className="text-primary-foreground/80 text-sm mb-4">
-                    Book a 30-minute intro call directly on our calendar.
+              );
+            })}
+
+            {/* Book a call */}
+            <div className="mt-6 bg-foreground text-background rounded-[12px] p-6">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-accent text-foreground shrink-0">
+                  <Calendar className="h-4 w-4" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-[16px]">Skip the form</h4>
+                  <p className="text-[13px] text-background/60 mt-0.5">
+                    Book a 30-min intro call.
                   </p>
-                  <Button
-                    asChild
-                    className="bg-primary-foreground text-primary hover:bg-primary-foreground/90 w-full sm:w-auto"
-                  >
-                    <a
-                      href={info?.book_meeting_link ?? "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Calendar className="h-4 w-4" />
-                      Book a Meeting
-                    </a>
-                  </Button>
                 </div>
               </div>
-            </Card>
-          </Reveal>
+              <a
+                href={STATIC_CONTACT.book_meeting_link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full bg-accent text-foreground font-semibold text-[14px] py-3 rounded-lg transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-card active:translate-y-0 active:scale-[0.98]"
+              >
+                <Calendar className="h-4 w-4" />
+                Book a meeting
+              </a>
+            </div>
+          </div>
 
-          {/* Contact Form */}
-          <Reveal direction="left" className="h-full">
-          <Card className="p-8">
-            <h3 className="text-2xl font-semibold mb-6">Send a Message</h3>
+          {/* Form */}
+          <div className="bg-card border border-foreground/10 rounded-[14px] p-8">
+            <h3 className="mb-6 text-[22px] font-semibold tracking-[-0.01em]">Send a message</h3>
             <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                <label htmlFor="name" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                   Full Name
                 </label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  placeholder="John Doe"
-                  maxLength={100}
-                />
-                {errors.name && (
-                  <p className="text-destructive text-xs mt-1">{errors.name}</p>
-                )}
+                <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="Jane Doe" maxLength={100} />
+                {errors.name && <p className="mt-1 text-xs text-destructive">{errors.name}</p>}
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                <label htmlFor="email" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                   Email Address
                 </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="john@example.com"
-                  maxLength={255}
-                />
-                {errors.email && (
-                  <p className="text-destructive text-xs mt-1">{errors.email}</p>
-                )}
+                <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="jane@example.com" maxLength={255} />
+                {errors.email && <p className="mt-1 text-xs text-destructive">{errors.email}</p>}
               </div>
 
               <div>
-                <label htmlFor="service" className="block text-sm font-medium mb-2">
+                <label htmlFor="service" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                   Service of Interest
                 </label>
-                <Select
-                  value={formData.service}
-                  onValueChange={(v) => setFormData({ ...formData, service: v })}
-                >
+                <Select value={formData.service} onValueChange={(v) => setFormData({ ...formData, service: v })}>
                   <SelectTrigger id="service">
                     <SelectValue placeholder="Select a service" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="design-development">
-                      Design &amp; Development
-                    </SelectItem>
-                    <SelectItem value="devops">DevOps Projects</SelectItem>
-                    <SelectItem value="ai-agents">AI Agents Integration</SelectItem>
+                    <SelectItem value="product">AI Product Engineering</SelectItem>
+                    <SelectItem value="devops">AI-Accelerated DevOps</SelectItem>
                     <SelectItem value="other">Something else</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.service && (
-                  <p className="text-destructive text-xs mt-1">{errors.service}</p>
-                )}
+                {errors.service && <p className="mt-1 text-xs text-destructive">{errors.service}</p>}
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                <label htmlFor="message" className="mb-2 block font-mono text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
                   Project Details
                 </label>
                 <Textarea
@@ -239,12 +177,13 @@ const Contact = () => {
                   maxLength={1000}
                   className="resize-none"
                 />
-                {errors.message && (
-                  <p className="text-destructive text-xs mt-1">{errors.message}</p>
-                )}
+                {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
               </div>
 
-              <Button type="submit" variant="hero" size="lg" className="w-full group">
+              <button
+                type="submit"
+                className="w-full flex items-center justify-center gap-2 bg-foreground text-background font-semibold text-[15px] py-4 rounded-lg transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-elegant active:translate-y-0 active:scale-[0.98]"
+              >
                 {submitted ? (
                   <>
                     <CheckCircle2 className="h-4 w-4" />
@@ -253,13 +192,12 @@ const Contact = () => {
                 ) : (
                   <>
                     Send Message
-                    <Send className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    <Send className="h-4 w-4" />
                   </>
                 )}
-              </Button>
+              </button>
             </form>
-          </Card>
-          </Reveal>
+          </div>
         </div>
       </div>
     </section>

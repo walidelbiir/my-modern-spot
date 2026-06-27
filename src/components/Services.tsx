@@ -1,177 +1,115 @@
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Code2, GitBranch, Bot, ArrowRight, Sparkles } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { Reveal, Stagger, StaggerItem, TiltCard } from "@/components/motion";
+import { motion } from "motion/react";
+import { Reveal } from "@/components/motion";
+import { EASE, VIEWPORT } from "@/lib/motion";
 
-const services = [
+const capabilities = [
   {
-    icon: Code2,
-    title: "Design & Development",
+    n: "01",
+    icon: "◳",
+    title: "AI Product Engineering",
     description:
-      "Product engineering for web and mobile — from design systems to production-ready apps.",
-    features: [
-      "Custom Web Applications",
-      "Design Systems & UI",
-      "API & Backend Engineering",
-      "Database Architecture",
-    ],
-    price: "Starting at $5,000",
+      "Web and mobile products, designed and built with AI-accelerated workflows — prototype to production in a fraction of the time.",
+    features: ["AI-assisted full-stack build", "Design systems & UI", "APIs & data architecture"],
     featured: false,
   },
   {
-    icon: GitBranch,
-    title: "DevOps Projects",
+    n: "02",
+    icon: "⌥",
+    title: "AI-Accelerated DevOps",
     description:
-      "Ship faster and sleep better with CI/CD, infrastructure-as-code, and observability built in.",
-    features: [
-      "CI/CD Pipelines",
-      "Infrastructure as Code",
-      "Container Orchestration",
-      "Cloud Migration",
-    ],
-    price: "Starting at $3,500",
+      "CI/CD, infrastructure-as-code, and observability — stood up fast with AI tooling and held to the SLOs you promise.",
+    features: ["Pipelines & IaC", "Cloud migration", "Observability & on-call"],
     featured: false,
-  },
-  {
-    icon: Bot,
-    title: "AI Agents Integration",
-    description:
-      "Production-grade AI agents and automations that plug into your existing stack and workflows.",
-    features: [
-      "Custom AI Agents",
-      "Process Automation",
-      "LLM & RAG Pipelines",
-      "Intelligent Workflows",
-    ],
-    price: "Starting at $4,000",
-    featured: true,
   },
 ];
 
 const Services = () => {
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToSection = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section id="services" className="py-24 bg-gradient-subtle">
-      <div className="container mx-auto px-6">
-        <Reveal className="text-center mb-16 max-w-2xl mx-auto">
-          <div className="text-sm tracking-[0.2em] uppercase text-accent font-semibold mb-3">
-            What we do
-          </div>
-          <h2 className="text-4xl lg:text-5xl font-bold mb-4">
-            Three practices.{" "}
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
-              One engineering team.
-            </span>
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Strategy, execution, and operations — delivered end-to-end by senior engineers.
-          </p>
-        </Reveal>
+    <section
+      id="services"
+      className="max-w-[1180px] mx-auto px-10 py-[118px] border-b border-foreground/10"
+    >
+      <Reveal>
+        <div className="eyebrow mb-4">What we build</div>
+      </Reveal>
+      <Reveal delay={0.08}>
+        <h2 className="m-0 mb-13 text-[clamp(2rem,4vw,2.75rem)] font-semibold tracking-[-0.025em] leading-[1.06] max-w-[640px]">
+          Two ways we ship.
+        </h2>
+      </Reveal>
 
-        <Stagger className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-          {services.map((service) => {
-            const Icon = service.icon;
-            return (
-              <StaggerItem key={service.title} className="h-full">
-                <TiltCard className="h-full">
-              <Card
-                className={cn(
-                  "relative p-7 transition-shadow duration-300 group h-full",
-                  service.featured
-                    ? "bg-primary text-primary-foreground border-primary shadow-elegant"
-                    : "hover:shadow-elegant"
-                )}
-              >
-                {service.featured && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 flex items-center gap-1 px-3 py-1 rounded-full bg-primary-glow text-primary-foreground text-xs font-semibold tracking-wide shadow-glow">
-                    <Sparkles className="h-3 w-3" />
-                    Most in demand
-                  </div>
-                )}
-                <div className="space-y-5">
-                  <div
-                    className={cn(
-                      "p-3 rounded-xl w-fit transition-shadow",
-                      service.featured
-                        ? "bg-primary-foreground/10 group-hover:shadow-glow"
-                        : "bg-gradient-primary group-hover:shadow-glow"
-                    )}
-                  >
-                    <Icon
-                      className={cn(
-                        "h-6 w-6",
-                        service.featured ? "text-primary-foreground" : "text-primary-foreground"
-                      )}
-                    />
-                  </div>
+      <div className="flex gap-6 flex-wrap mt-12">
+        {capabilities.map((cap, i) => (
+          <motion.div
+            key={cap.n}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={VIEWPORT}
+            transition={{ duration: 0.5, ease: EASE, delay: i * 0.1 }}
+            className={`flex-1 min-w-[260px] rounded-[12px] p-[34px] border transition-[transform,box-shadow] duration-300 ease-out-expo hover:-translate-y-1.5 hover:shadow-elegant ${
+              cap.featured
+                ? "bg-foreground text-background border-foreground"
+                : "bg-card border-foreground/12"
+            }`}
+          >
+            {/* top row */}
+            <div className="flex items-center justify-between mb-6">
+              <span className="font-mono text-[13px] text-accent">{cap.n}</span>
+              {cap.featured ? (
+                <span className="font-mono text-[9.5px] tracking-[0.12em] uppercase bg-accent text-foreground px-2 py-1 rounded-[5px]">
+                  Flagship
+                </span>
+              ) : (
+                <span className="w-[34px] h-[34px] rounded-lg border border-foreground/16 flex items-center justify-center text-[15px] text-foreground">
+                  {cap.icon}
+                </span>
+              )}
+            </div>
 
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
-                    <p
-                      className={cn(
-                        "text-sm leading-relaxed",
-                        service.featured
-                          ? "text-primary-foreground/80"
-                          : "text-muted-foreground"
-                      )}
-                    >
-                      {service.description}
-                    </p>
-                  </div>
+            <h3
+              className={`m-0 mb-3 text-[21px] font-semibold tracking-[-0.01em] ${
+                cap.featured ? "text-background" : "text-foreground"
+              }`}
+            >
+              {cap.title}
+            </h3>
+            <p
+              className={`m-0 mb-5 text-[15px] leading-[1.6] ${
+                cap.featured ? "text-background/70" : "text-muted-foreground"
+              }`}
+            >
+              {cap.description}
+            </p>
 
-                  <ul className="space-y-2 pt-2">
-                    {service.features.map((f) => (
-                      <li key={f} className="flex items-center text-sm">
-                        <ArrowRight
-                          className={cn(
-                            "h-3 w-3 mr-2 shrink-0",
-                            service.featured ? "text-primary-glow" : "text-accent"
-                          )}
-                        />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
+            <div className="flex flex-col gap-2.5">
+              {cap.features.map((f) => (
+                <span
+                  key={f}
+                  className={`text-[14px] flex items-center gap-2.5 ${
+                    cap.featured ? "text-background/86" : "text-foreground/80"
+                  }`}
+                >
+                  <span className="w-1 h-1 rounded-full bg-accent shrink-0" />
+                  {f}
+                </span>
+              ))}
+            </div>
 
-                  <div
-                    className={cn(
-                      "pt-4 border-t",
-                      service.featured ? "border-primary-foreground/15" : "border-border"
-                    )}
-                  >
-                    <div
-                      className={cn(
-                        "text-sm font-semibold mb-4",
-                        service.featured ? "text-primary-glow" : "text-primary"
-                      )}
-                    >
-                      {service.price}
-                    </div>
-                    <Button
-                      variant={service.featured ? "default" : "default"}
-                      className={cn(
-                        "w-full",
-                        service.featured
-                          ? "bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-                          : "bg-primary text-primary-foreground hover:bg-primary/90"
-                      )}
-                      onClick={() => scrollToSection("contact")}
-                    >
-                      Get Started
-                      <ArrowRight className="ml-1 h-4 w-4" />
-                    </Button>
-                  </div>
-                </div>
-              </Card>
-                </TiltCard>
-              </StaggerItem>
-            );
-          })}
-        </Stagger>
+            <button
+              onClick={() => scrollToSection("contact")}
+              className={`mt-8 w-full py-3 rounded-lg text-[14.5px] font-semibold transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-card active:translate-y-0 active:scale-[0.98] ${
+                cap.featured
+                  ? "bg-accent text-foreground"
+                  : "bg-foreground text-background"
+              }`}
+            >
+              Get started
+            </button>
+          </motion.div>
+        ))}
       </div>
     </section>
   );

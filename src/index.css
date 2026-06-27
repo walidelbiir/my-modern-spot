@@ -2,91 +2,106 @@
 @tailwind components;
 @tailwind utilities;
 
-/* BIR Solutions Design System - All colors MUST be HSL */
+/* ============================================================
+   B!R Design System — AI-First Studio
+   Warm parchment + ink + terracotta signal.
+   Schibsted Grotesk body, Space Mono labels.
+   Soft 1px borders, rounded corners, gaussian shadows.
+   ============================================================ */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 212 50% 12%;
+    /* Parchment & ink */
+    --background: 45 40% 97%;       /* #FBFAF7 warm near-white */
+    --foreground: 28 13% 9%;        /* #1B1815 near-black ink */
 
-    --card: 0 0% 100%;
-    --card-foreground: 212 50% 12%;
+    --card: 0 0% 100%;              /* #ffffff white cards */
+    --card-foreground: 28 13% 9%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 212 50% 12%;
+    --popover-foreground: 28 13% 9%;
 
-    /* BIR Solutions - Deep Navy and Steel */
-    --primary: 212 65% 18%;
-    --primary-foreground: 0 0% 100%;
-    --primary-glow: 205 55% 38%;
+    /* Primary = ink. Buttons, blocks. */
+    --primary: 28 13% 9%;
+    --primary-foreground: 45 40% 97%;
 
-    --secondary: 210 25% 96%;
-    --secondary-foreground: 212 50% 12%;
+    /* Secondary = warm tan for section alt-bg */
+    --secondary: 38 22% 93%;        /* #F3EFE8 */
+    --secondary-foreground: 28 13% 9%;
 
-    --muted: 210 25% 96%;
-    --muted-foreground: 212 15% 45%;
+    --muted: 38 18% 93%;
+    --muted-foreground: 28 10% 40%; /* #6B645B */
 
-    --accent: 205 55% 38%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent = TERRACOTTA. Branded signal, used sparingly. */
+    --accent: 15 57% 47%;           /* #C25733 */
+    --accent-foreground: 45 40% 97%;
+    --accent-soft: 22 41% 87%;      /* #F0DCCF — soft tint for highlights */
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 6 78% 50%;
+    --destructive-foreground: 45 40% 97%;
 
-    --border: 212 20% 88%;
-    --input: 212 20% 88%;
-    --ring: 212 65% 18%;
+    /* Light 10%-opacity borders */
+    --border: 28 8% 85%;
+    --input: 28 8% 82%;
+    --ring: 15 57% 47%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(212 65% 18%), hsl(205 55% 38%));
-    --gradient-hero: linear-gradient(135deg, hsl(212 65% 12%) 0%, hsl(212 65% 22%) 50%, hsl(205 55% 38%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(210 25% 97%) 100%);
+    /* Soft gaussian shadows */
+    --shadow-card: 0 4px 20px rgba(27, 24, 21, 0.08);
+    --shadow-elegant: 0 12px 40px rgba(27, 24, 21, 0.10);
+    --shadow-glow: 0 8px 30px rgba(194, 87, 51, 0.18);
 
-    --shadow-elegant: 0 10px 30px -10px hsl(212 65% 18% / 0.25);
-    --shadow-glow: 0 0 40px hsl(205 55% 38% / 0.3);
-    --shadow-card: 0 4px 20px -4px hsl(212 50% 12% / 0.12);
+    --transition-smooth: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    --transition-bounce: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    /* Strong, intentional easing curves (CSS built-ins are too weak) */
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
 
-    --radius: 0.5rem;
+    /* Rounded — matches design 10-12px corners */
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 45 40% 97%;
+    --sidebar-foreground: 28 13% 9%;
+    --sidebar-primary: 28 13% 9%;
+    --sidebar-primary-foreground: 45 40% 97%;
+    --sidebar-accent: 15 57% 47%;
+    --sidebar-accent-foreground: 45 40% 97%;
+    --sidebar-border: 28 8% 85%;
+    --sidebar-ring: 15 57% 47%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 28 13% 7%;
+    --foreground: 45 40% 95%;
+    --card: 28 10% 11%;
+    --card-foreground: 45 40% 95%;
+    --popover: 28 10% 11%;
+    --popover-foreground: 45 40% 95%;
+    --primary: 45 40% 95%;
+    --primary-foreground: 28 13% 9%;
+    --secondary: 28 8% 16%;
+    --secondary-foreground: 45 40% 95%;
+    --muted: 28 8% 16%;
+    --muted-foreground: 38 12% 62%;
+    --accent: 15 57% 55%;
+    --accent-foreground: 45 40% 97%;
+    --destructive: 6 78% 52%;
+    --destructive-foreground: 45 40% 97%;
+    --border: 28 8% 22%;
+    --input: 28 8% 26%;
+    --ring: 15 57% 47%;
+    --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --shadow-elegant: 0 12px 40px rgba(0, 0, 0, 0.35);
+    --shadow-glow: 0 8px 30px rgba(194, 87, 51, 0.25);
+    --sidebar-background: 28 13% 7%;
+    --sidebar-foreground: 45 40% 95%;
+    --sidebar-primary: 45 40% 95%;
+    --sidebar-primary-foreground: 28 13% 9%;
+    --sidebar-accent: 15 57% 47%;
+    --sidebar-accent-foreground: 45 40% 97%;
+    --sidebar-border: 28 8% 22%;
+    --sidebar-ring: 15 57% 47%;
   }
 }
 
@@ -96,6 +111,126 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Schibsted Grotesk', ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv01";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-bold tracking-tight;
+  }
+
+  ::selection {
+    background: hsl(var(--accent-soft));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer components {
+  /* Section eyebrow label — mono, uppercase, terracotta dot */
+  .eyebrow {
+    @apply inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.16em] text-muted-foreground;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-[7px] w-[7px] rounded-full bg-accent;
+  }
+
+  /* Soft bordered surface */
+  .brut-box {
+    @apply border border-foreground/10 bg-card rounded-xl;
+  }
+
+  /* Card lift on hover */
+  .brut-lift {
+    @apply transition-[transform,box-shadow] duration-300;
+    transition-timing-function: var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .brut-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-elegant);
+    }
+  }
+}
+
+@layer utilities {
+  /* Soft terracotta highlight behind inline text */
+  .mark-accent {
+    background: linear-gradient(transparent 58%, hsl(var(--accent-soft)) 58%);
+    @apply box-decoration-clone px-1;
+  }
+
+  /* Fine ink grid for backdrops — very subtle */
+  .grid-ink {
+    background-image:
+      linear-gradient(hsl(var(--foreground) / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--foreground) / 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Dotted halftone field */
+  .dots-ink {
+    background-image: radial-gradient(hsl(var(--foreground) / 0.08) 1.4px, transparent 1.5px);
+    background-size: 16px 16px;
+  }
+
+  /* Diagonal hazard stripes */
+  .stripes-ink {
+    background-image: repeating-linear-gradient(
+      45deg,
+      hsl(var(--foreground)) 0,
+      hsl(var(--foreground)) 2px,
+      transparent 2px,
+      transparent 9px
+    );
+  }
+
+  /* Pulsing dot animation */
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.62); }
+  }
+  .animate-pulse-dot {
+    animation: pulse-dot 1.7s ease-in-out infinite;
+  }
+
+  /* Scrolling feed animation */
+  @keyframes feed-scroll {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50%); }
+  }
+  .animate-feed {
+    animation: feed-scroll 28s linear infinite;
+  }
+  .animate-feed:hover {
+    animation-play-state: paused;
+  }
+
+  /* Spinning ring */
+  @keyframes slow-spin {
+    to { transform: rotate(360deg); }
+  }
+  .animate-slow-spin {
+    animation: slow-spin 9s linear infinite;
+  }
+
+  /* Reduced motion: drop looping/position-based motion, keep gentle opacity cues.
+     Movement animations can trigger motion sickness; comprehension cues stay. */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-feed,
+    .animate-slow-spin,
+    .animate-scroll,
+    .animate-marquee-rev,
+    .animate-bounce-slow {
+      animation: none !important;
+    }
+    .animate-pulse-dot {
+      animation: pulse-dot 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: none; }
+      50% { opacity: 0.4; transform: none; }
+    }
   }
 }

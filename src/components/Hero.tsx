@@ -1,234 +1,227 @@
-import { Button } from "@/components/ui/button";
-import { ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
-import { motion, useInView, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import heroImage from "@/assets/hero-tech.jpg";
-import { CountUp, WordReveal } from "@/components/motion";
+import { motion, useReducedMotion } from "motion/react";
 import { EASE } from "@/lib/motion";
+import { useRef, useEffect } from "react";
 
-const TERMINAL_LINES = [
-  "> bir deploy --env=prod",
-  "\u2713 build complete         2.4s",
-  "\u2713 tests passed   142/142  18s",
-  "\u2713 infra synced            6s",
-  "\u2713 ai-agent registered     1s",
-  "\u2713 rollout 100%           12s",
-  "",
-  "Deployment ready \u2192 99.99% SLA",
+const FEED_ITEMS = [
+  { type: "agent", text: "drafted PR #2207 — preview engine", time: "0.4s" },
+  { type: "ci",    text: "184 tests generated & run", time: "21s" },
+  { type: "human", text: "staff eng approved architecture", time: "✓" },
+  { type: "agent", text: "migration script ready — 0 downtime", time: "1.2s" },
+  { type: "human", text: "reviewed diff & merged", time: "✓" },
+  { type: "deploy",text: "shipped to prod — rollout 100%", time: "12s" },
+  { type: "slo",   text: "99.99% held · p95 142ms", time: "▰▰▰" },
 ];
 
-const HeroTerminal = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
-  const reduce = useReducedMotion();
-  const [count, setCount] = useState(reduce ? TERMINAL_LINES.length : 0);
-
-  useEffect(() => {
-    if (!inView || reduce || count >= TERMINAL_LINES.length) return;
-    const t = setTimeout(() => setCount((c) => c + 1), count === 0 ? 400 : 300);
-    return () => clearTimeout(t);
-  }, [inView, count, reduce]);
-
-  const done = count >= TERMINAL_LINES.length;
-
-  return (
-    <div ref={ref} className="text-xs md:text-sm text-primary-foreground/85 font-mono leading-relaxed min-h-[11rem]">
-      {TERMINAL_LINES.slice(0, count).map((line, i) => (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, x: -8 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.25, ease: EASE }}
-          className="whitespace-pre"
-        >
-          {line.startsWith("\u2713") ? (
-            <span>
-              <span className="text-green-400">{"\u2713"}</span>
-              {line.slice(1)}
-            </span>
-          ) : line.startsWith("Deployment") ? (
-            <span className="text-primary-glow font-semibold">{line}</span>
-          ) : (
-            line || "\u00a0"
-          )}
-        </motion.div>
-      ))}
-      {!done && (
-        <motion.span
-          className="inline-block h-4 w-2 bg-primary-glow align-middle"
-          animate={{ opacity: [1, 0.2, 1] }}
-          transition={{ duration: 0.9, repeat: Infinity }}
-        />
-      )}
-    </div>
-  );
+const TYPE_STYLE: Record<string, string> = {
+  agent:  "bg-accent text-white",
+  ci:     "bg-foreground text-background",
+  human:  "border border-foreground/30 text-foreground bg-transparent",
+  deploy: "bg-foreground text-background",
+  slo:    "bg-accent text-white",
 };
 
+function FeedRow({ type, text, time }: { type: string; text: string; time: string }) {
+  return (
+    <div className="flex items-center gap-3 py-3.5 border-t border-foreground/7 first:border-t-0">
+      <span
+        className={`font-mono text-[9px] font-bold tracking-[0.06em] uppercase px-2 py-[3px] rounded-[5px] shrink-0 ${TYPE_STYLE[type] ?? "bg-foreground/10 text-foreground"}`}
+      >
+        {type}
+      </span>
+      <span className="text-[13.5px] text-foreground/80 flex-1 leading-snug">{text}</span>
+      <span className="font-mono text-[11px] text-muted-foreground shrink-0">{time}</span>
+    </div>
+  );
+}
+
 const rise = (delay: number) => ({
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 22 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6, ease: EASE, delay },
 });
 
 const Hero = () => {
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
-  };
+  const reduce = useReducedMotion();
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    if (reduce) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d")!;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let w = 0, h = 0;
+
+    const resize = () => {
+      const p = canvas.parentElement!;
+      const r = p.getBoundingClientRect();
+      w = r.width; h = r.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    const start = performance.now();
+    const blobs = [
+      { x: 0.22, y: 0.40, r: 0.46, ac: true,  sx: 0.5,  sy: 0.4 },
+      { x: 0.66, y: 0.30, r: 0.40, ac: false,  sx: -0.4, sy: 0.55 },
+      { x: 0.52, y: 0.74, r: 0.36, ac: true,  sx: 0.35, sy: -0.6 },
+    ];
+
+    const frame = (now: number) => {
+      const t = (now - start) / 1000;
+      ctx.clearRect(0, 0, w, h);
+      blobs.forEach((b, i) => {
+        const cx = (b.x + 0.05 * Math.sin(t * b.sx + i)) * w;
+        const cy = (b.y + 0.06 * Math.cos(t * b.sy + i)) * h;
+        const rad = b.r * w;
+        const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rad);
+        if (b.ac) {
+          g.addColorStop(0, "rgba(194, 87, 51, 0.18)");
+          g.addColorStop(1, "rgba(194, 87, 51, 0)");
+        } else {
+          g.addColorStop(0, "rgba(27, 24, 21, 0.05)");
+          g.addColorStop(1, "rgba(27, 24, 21, 0)");
+        }
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, w, h);
+      });
+      rafRef.current = requestAnimationFrame(frame);
+    };
+    rafRef.current = requestAnimationFrame(frame);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      window.removeEventListener("resize", resize);
+    };
+  }, [reduce]);
+
+  const scrollToSection = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+
+  const doubled = [...FEED_ITEMS, ...FEED_ITEMS];
 
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-hero pt-24 pb-12"
+      className="relative overflow-hidden bg-background pt-[4.5rem]"
     >
-      {/* Background image with dark overlay */}
-      <div className="absolute inset-0">
-        <img
-          src={heroImage}
-          alt=""
-          aria-hidden="true"
-          className="w-full h-full object-cover opacity-40"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-primary/80 via-primary/70 to-primary/95" />
-      </div>
-
-      {/* Living aurora background */}
-      <motion.div
+      <canvas
+        ref={canvasRef}
         aria-hidden="true"
-        className="absolute -top-1/4 left-1/4 h-[60vh] w-[60vh] rounded-full bg-[radial-gradient(circle,hsl(var(--primary-glow)/0.4),transparent_60%)] blur-3xl"
-        animate={{ x: [0, 60, -30, 0], y: [0, -40, 30, 0], scale: [1, 1.15, 0.95, 1] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 w-full h-full pointer-events-none"
       />
-      <motion.div
+      <div
         aria-hidden="true"
-        className="absolute bottom-0 right-1/4 h-[50vh] w-[50vh] rounded-full bg-[radial-gradient(circle,hsl(var(--primary-glow)/0.3),transparent_60%)] blur-3xl"
-        animate={{ x: [0, -50, 20, 0], y: [0, 30, -20, 0], scale: [1, 0.9, 1.1, 1] }}
-        transition={{ duration: 22, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(120% 90% at 78% 18%, transparent 40%, rgba(251,250,247,.55) 100%)",
+        }}
       />
 
-      <div className="container relative mx-auto px-6 z-10">
-        <div className="grid lg:grid-cols-12 gap-10 items-center">
-          <div className="lg:col-span-7 space-y-8 text-primary-foreground">
-            <motion.div
-              {...rise(0.05)}
-              className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary-foreground/20 bg-primary-foreground/5 backdrop-blur-sm text-xs tracking-wider uppercase"
-            >
-              <span className="h-2 w-2 rounded-full bg-primary-glow animate-pulse" />
-              IT Services • DevOps • AI Agents
-            </motion.div>
-
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.12] tracking-tight pb-0.5">
-              <WordReveal
-                onMount
-                delay={0.2}
-                segments={[
-                  { text: "Engineering the" },
-                  {
-                    text: "next era",
-                    className:
-                      "bg-gradient-to-r from-primary-foreground to-primary-glow bg-clip-text text-transparent",
-                  },
-                  { text: "of digital business." },
-                ]}
-              />
-            </h1>
-
-            <motion.p
-              {...rise(0.55)}
-              className="text-lg md:text-xl text-primary-foreground/75 leading-relaxed max-w-xl"
-            >
-              BIR Solutions designs, ships, and scales modern software — from product engineering
-              to DevOps automation and AI agent integration.
-            </motion.p>
-
-            <motion.div {...rise(0.7)} className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="lg"
-                onClick={() => scrollToSection("contact")}
-                className="group bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-              >
-                Start a Project
-                <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => scrollToSection("portfolio")}
-                className="group bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              >
-                See Our Work
-                <ArrowUpRight className="ml-1 h-4 w-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </Button>
-            </motion.div>
-
-            <motion.div
-              {...rise(0.85)}
-              className="grid grid-cols-3 gap-6 pt-6 max-w-xl border-t border-primary-foreground/15"
-            >
-              <div className="pt-6">
-                <div className="text-3xl md:text-4xl font-bold text-primary-foreground">
-                  <CountUp value="200+" />
-                </div>
-                <div className="text-xs md:text-sm text-primary-foreground/60 mt-1">
-                  Projects Delivered
-                </div>
-              </div>
-              <div className="pt-6">
-                <div className="text-3xl md:text-4xl font-bold text-primary-foreground">
-                  <CountUp value="50+" />
-                </div>
-                <div className="text-xs md:text-sm text-primary-foreground/60 mt-1">
-                  Enterprise Clients
-                </div>
-              </div>
-              <div className="pt-6">
-                <div className="text-3xl md:text-4xl font-bold text-primary-foreground">
-                  <CountUp value="99.9%" />
-                </div>
-                <div className="text-xs md:text-sm text-primary-foreground/60 mt-1">
-                  Uptime Guarantee
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Decorative terminal panel */}
+      <div className="relative max-w-[1180px] mx-auto px-10 py-24 flex gap-16 items-center">
+        {/* Left column */}
+        <div className="flex-1 min-w-0">
           <motion.div
-            initial={{ opacity: 0, y: 40, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.8, ease: EASE, delay: 0.5 }}
-            className="hidden lg:block lg:col-span-5"
+            {...rise(0.05)}
+            className="inline-flex items-center gap-2.5 font-mono text-[12.5px] tracking-[0.16em] uppercase text-muted-foreground border border-foreground/16 bg-card px-3 py-[7px] rounded-full mb-8"
           >
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-              className="relative"
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
+            AI-First Software Studio
+          </motion.div>
+
+          <motion.h1
+            {...rise(0.12)}
+            className="m-0 text-[clamp(2.8rem,6vw,3.75rem)] font-semibold leading-[1.04] tracking-[-0.03em] text-foreground"
+          >
+            Build at{" "}
+            <span className="whitespace-nowrap mark-accent">AI speed</span>.<br />
+            Ship at{" "}
+            <span className="whitespace-nowrap text-accent">senior standards</span>.
+          </motion.h1>
+
+          <motion.p
+            {...rise(0.22)}
+            className="mt-7 text-[19px] leading-[1.6] text-muted-foreground max-w-[500px]"
+          >
+            B!R is an AI-first studio. We pair senior engineers with
+            AI-accelerated workflows to design, build, and operate production
+            software — dramatically faster, and without the slop.
+          </motion.p>
+
+          <motion.div {...rise(0.32)} className="flex items-center gap-6 mt-9">
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="text-[15.5px] font-semibold text-background bg-foreground px-7 py-4 rounded-[9px] transition-[transform,box-shadow] duration-200 ease-out-expo hover:-translate-y-0.5 hover:shadow-elegant active:translate-y-0 active:scale-[0.98]"
             >
-              <div className="absolute -inset-4 bg-gradient-to-br from-primary-glow/30 to-transparent rounded-3xl blur-2xl" />
-              <div className="relative rounded-2xl border border-primary-foreground/15 bg-primary/40 backdrop-blur-md p-6 shadow-elegant">
-                <div className="flex items-center gap-2 mb-4">
-                  <div className="flex gap-1.5">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-400/70" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-yellow-400/70" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-green-400/70" />
-                  </div>
-                  <span className="text-xs text-primary-foreground/50 ml-2">deploy.bir.tech</span>
-                </div>
-                <HeroTerminal />
-              </div>
-            </motion.div>
+              Start a project
+            </button>
+            <button
+              onClick={() => scrollToSection("about")}
+              className="inline-flex items-center gap-2 text-[15.5px] font-medium text-foreground border-b border-foreground/25 pb-0.5 transition-colors hover:text-accent hover:border-accent"
+            >
+              See how we ship{" "}
+              <span className="text-accent">→</span>
+            </button>
+          </motion.div>
+
+          <motion.div
+            {...rise(0.42)}
+            className="inline-flex items-center gap-2.5 mt-8 font-mono text-[12.5px] tracking-[0.05em] text-muted-foreground"
+          >
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
+            Shipping now — 3 deploys today · 99.99% SLA held
           </motion.div>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <button
-        onClick={() => scrollToSection("about")}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 text-primary-foreground/60 hover:text-primary-foreground transition-colors"
-        aria-label="Scroll down"
-      >
-        <span className="text-[0.65rem] tracking-[0.25em] uppercase">Scroll</span>
-        <ChevronDown className="h-5 w-5 animate-bounce-slow" />
-      </button>
+        {/* Activity feed */}
+        <motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: EASE, delay: 0.4 }}
+          className="hidden lg:block flex-none w-[420px]"
+        >
+          <div className="bg-card border border-foreground/12 rounded-[14px] overflow-hidden shadow-elegant">
+            {/* Header bar */}
+            <div className="flex items-center justify-between px-5 py-[15px] border-b border-foreground/10 bg-secondary">
+              <span className="font-mono text-[11px] tracking-[0.16em] uppercase text-foreground inline-flex items-center gap-2.5">
+                <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
+                The floor — live
+              </span>
+              <span className="font-mono text-[10.5px] tracking-[0.1em] text-muted-foreground">
+                bir.tech
+              </span>
+            </div>
+
+            {/* Scrolling feed */}
+            <div className="relative h-[372px] overflow-hidden px-5">
+              {reduce ? (
+                FEED_ITEMS.map((item, i) => <FeedRow key={i} {...item} />)
+              ) : (
+                <div className="flex flex-col animate-feed">
+                  {doubled.map((item, i) => (
+                    <FeedRow key={i} {...item} />
+                  ))}
+                </div>
+              )}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 right-0 bottom-0 h-14"
+                style={{ background: "linear-gradient(to top, #fff, transparent)" }}
+              />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute left-0 right-0 top-0 h-6"
+                style={{ background: "linear-gradient(to bottom, #fff, transparent)" }}
+              />
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 };

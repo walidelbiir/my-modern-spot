@@ -1,49 +1,35 @@
-import { Reveal } from "@/components/motion";
-
 const clients = [
-  "ACME CORP",
+  "ACME",
   "NORTHWIND",
-  "STELLAR.IO",
-  "QUANTUMLABS",
+  "STELLAR",
+  "QUANTUM",
   "HELIX",
   "BYTEFORGE",
-  "NIMBUS CLOUD",
+  "NIMBUS",
   "ORBITAL",
-  "VERTEX AI",
+  "VERTEX",
   "PARALLAX",
 ];
 
 const ClientLogos = () => {
-  const doubled = [...clients, ...clients];
-
   return (
-    <section className="py-16 bg-background border-y border-border overflow-hidden">
-      <div className="container mx-auto px-6">
-        <Reveal className="text-center mb-10">
-          <div className="text-xs tracking-[0.25em] uppercase text-muted-foreground">
-            Trusted by teams at
-          </div>
-        </Reveal>
-      </div>
-
-      <div className="relative">
-        <div className="flex w-max gap-16 animate-scroll">
-          {doubled.map((name, i) => (
-            <div
-              key={`${name}-${i}`}
-              className="flex-shrink-0 flex items-center justify-center px-4"
+    <div className="border-t border-b border-foreground/10 bg-secondary">
+      <div className="max-w-[1180px] mx-auto px-10 py-6 flex items-center gap-10 flex-wrap">
+        <span className="font-mono text-[11px] tracking-[0.14em] uppercase text-muted-foreground whitespace-nowrap">
+          Shipping for teams at
+        </span>
+        <div className="flex items-center gap-10 flex-wrap">
+          {clients.slice(0, 6).map((name) => (
+            <span
+              key={name}
+              className="font-bold text-[16px] text-foreground/30 tracking-[0.04em] uppercase hover:text-foreground/60 transition-colors cursor-default"
             >
-              <span className="text-xl md:text-2xl font-bold tracking-[0.15em] text-muted-foreground/60 hover:text-primary transition-colors whitespace-nowrap">
-                {name}
-              </span>
-            </div>
+              {name}
+            </span>
           ))}
         </div>
-
-        <div className="absolute left-0 top-0 w-24 h-full bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="absolute right-0 top-0 w-24 h-full bg-gradient-to-l from-background to-transparent z-10" />
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -7,6 +7,7 @@ import MidCTA from "../components/MidCTA";
 import Portfolio from "../components/Portfolio";
 import ClientLogos from "../components/ClientLogos";
 import Testimonials from "../components/Testimonials";
+import QualityBar from "../components/QualityBar";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import BackToTop from "../components/BackToTop";
@@ -21,10 +22,11 @@ const Index = () => {
         <Hero />
         <ClientLogos />
         <About />
-        <Services />
         <Process />
+        <Services />
         <MidCTA />
         <Portfolio />
+        <QualityBar />
         <Testimonials />
         <Contact />
       </main>

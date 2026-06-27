@@ -4,6 +4,11 @@ export default {
   darkMode: ["class"],
   content: ["./pages/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}", "./app/**/*.{ts,tsx}", "./src/**/*.{ts,tsx}"],
   prefix: "",
+  future: {
+    // hover: utilities only apply on devices that truly support hover —
+    // prevents sticky hover-lift after a tap on touch screens
+    hoverOnlyWhenSupported: true,
+  },
   theme: {
     container: {
       center: true,
@@ -13,6 +18,11 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["'Schibsted Grotesk'", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["'Schibsted Grotesk'", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["'Space Mono'", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -72,6 +82,8 @@ export default {
       transitionTimingFunction: {
         smooth: "var(--transition-smooth)",
         bounce: "var(--transition-bounce)",
+        "out-expo": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "in-out-strong": "cubic-bezier(0.77, 0, 0.175, 1)",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -115,6 +127,14 @@ export default {
           "0%": { opacity: "0", transform: "translateY(-50%) scale(1.12)" },
           "100%": { opacity: "0.05", transform: "translateY(-50%) scale(1)" },
         },
+        "marquee-rev": {
+          "0%": { transform: "translateX(-50%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        blink: {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -126,6 +146,8 @@ export default {
         "slide-enter-from-bottom": "slide-enter-from-bottom 0.65s cubic-bezier(0.22, 1, 0.36, 1) both",
         "slide-enter-from-top": "slide-enter-from-top 0.65s cubic-bezier(0.22, 1, 0.36, 1) both",
         "watermark-enter": "watermark-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "marquee-rev": "marquee-rev 40s linear infinite",
+        blink: "blink 1s steps(1) infinite",
       },
     },
   },

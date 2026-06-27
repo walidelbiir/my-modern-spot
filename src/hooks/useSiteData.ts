@@ -1,36 +1,45 @@
-import { useQuery } from "@tanstack/react-query";
 import {
-  fetchCaseStudyBySlug,
-  fetchGeneralInformation,
-  fetchProjects,
-  fetchTestimonies,
-} from "@/lib/site-data";
+  STATIC_PROJECTS,
+  STATIC_TESTIMONIALS,
+  STATIC_CONTACT,
+  STATIC_CASE_STUDIES,
+  type ProjectCard,
+  type TestimonyCard,
+} from "@/lib/static-data";
+import type { CaseStudy } from "@/types/caseStudy";
+
+// Static hooks — no network calls, no Supabase
 
 export function useProjects() {
-  return useQuery({
-    queryKey: ["projects"],
-    queryFn: fetchProjects,
-  });
+  return {
+    data: STATIC_PROJECTS as ProjectCard[],
+    isLoading: false,
+    isError: false,
+  };
 }
 
 export function useTestimonies() {
-  return useQuery({
-    queryKey: ["testimonies"],
-    queryFn: fetchTestimonies,
-  });
+  return {
+    data: STATIC_TESTIMONIALS as TestimonyCard[],
+    isLoading: false,
+    isError: false,
+  };
 }
 
 export function useGeneralInformation() {
-  return useQuery({
-    queryKey: ["general-information"],
-    queryFn: fetchGeneralInformation,
-  });
+  return {
+    data: STATIC_CONTACT,
+    isLoading: false,
+    isError: false,
+  };
 }
 
 export function useCaseStudy(slug: string | undefined) {
-  return useQuery({
-    queryKey: ["case-study", slug],
-    queryFn: () => fetchCaseStudyBySlug(slug!),
-    enabled: Boolean(slug),
-  });
+  const study: CaseStudy | null =
+    slug && STATIC_CASE_STUDIES[slug] ? STATIC_CASE_STUDIES[slug] : null;
+  return {
+    data: study,
+    isLoading: false,
+    isError: false,
+  };
 }
